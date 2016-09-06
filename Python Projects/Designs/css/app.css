@@ -3,6 +3,20 @@ body {
     color: #1BBBFB;
     font-family: sans-serif;
 }
+.toolbar{
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    color: #fff;
+    z-index: 10;
+    display: block;
+    text-align: center;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    background-color: #1BBBFB;
+}
 #toolbar {
     display: block;
     z-index: 10;
@@ -23,7 +37,7 @@ body {
     font-weight: bolder;
 }
 .padd{
-     padding-top: 20px;
+     padding-top: 120px;
 }
 .card {
     display: block;
