@@ -4,7 +4,7 @@ body {
     font-family: sans-serif;
 }
 .toolbar{
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     left: 0;
@@ -37,9 +37,22 @@ body {
     font-weight: bolder;
 }
 .padd{
-     padding-top: 120px;
+    margin-top: 12%;
 }
+
 .card {
+    display: block;
+    position: relative;
+    width: 90%;
+    border: 1px solid #1BBBFB;
+    -webkit-border-radius: 4px; 
+    -moz-border-radius: 4px;   
+    border-radius: 4px;
+    background-color: #fafafa;
+    margin:0px auto;
+}
+
+.card-one {
     display: block;
     position: relative;
     width: 90%;
@@ -49,7 +62,7 @@ body {
     -moz-border-radius: 4px;   
     border-radius: 4px;
     background-color: #fafafa;
-    margin: 16px auto;
+    margin:15% auto;
     padding: 24px;
 }
 ul
@@ -162,3 +175,155 @@ i {
   background-color: #efefef;
   text-align: center;
 }
+
+/*Start of the search bar*/
+
+.search_bar {
+  background: #fff;
+  border: #efefef solid 1px;
+  border-radius: 3px;
+  box-shadow: 0 0 3px #efefef;
+  position: relative;
+  font-family: 'Crete Round';
+}
+.search_bar input[type=text] {
+  border: none;
+  box-shadow: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding: .5em;
+  margin: 0;
+  overflow: hidden;
+}
+.search_bar input[type=text]:focus {
+  outline: none;
+}
+.search_bar button[type=submit] {
+  background-color: #1bbbfb;
+  color: rgba(255, 255, 255, 0);
+  border: 1px solid #1bbbfb;
+  width: 20%;
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: 0 3px 3px 0;
+  margin: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.search_bar button[type=submit]:after {
+  content: '';
+  position: absolute;
+  top: 18%;
+  right: 0;
+  bottom: 22%;
+  left: 4%;
+  width: 60%;
+  min-width: 60%;
+  background: url("http://media.lib.byu.edu/assets/images/searchbar/1.0/search-icon.svg") no-repeat center center;
+  background-size: contain;
+}
+.search_bar button[type=submit]:hover, .search_bar button[type=submit]:focus {
+  background: #E01B6A;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.search_bar .search_dropdown {
+  font-weight: 600;
+  background: #ccc;
+  border-right: 1px solid #1BBBFB;
+  color: #555;
+  padding: 0 28px 0 13px;
+  border-radius: 2px 0 0 2px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 20%;
+  min-width: 20%;
+  z-index: 10000;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  box-sizing: content-box;
+}
+.search_bar .search_dropdown:after {
+  content: "\2193";
+  color: rgba(85, 85, 85, 0);
+  background: url("http://media.lib.byu.edu/assets/images/searchbar/1.0/down-arrow.svg") no-repeat top left;
+  height: 8px;
+  width: 10px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  margin-top: -6px;
+}
+.search_bar .search_dropdown:hover, .search_bar .search_dropdown.active {
+  background: #efefef;
+  cursor: pointer;
+  border-right-color: #efefef;
+}
+.search_bar .search_dropdown > span {
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+  white-space: nowrap;
+  font-size: 15px;
+}
+.search_bar .search_dropdown ul {
+  display: none;
+  position: absolute;
+  top: 105%;
+  left: -1px;
+  height: 100px;
+  font-size: 14px;
+  background: #fff;
+  border: 1px solid #efefef;
+  border-radius: 3px;
+  padding: 7px 0;
+}
+.search_bar .search_dropdown li {
+  list-style-type: none;
+  margin: 0;
+  padding: 5px 18px;
+  color: #1BBBFB;
+  line-height: 1.2em;
+  position: relative;
+}
+.search_bar .search_dropdown li:hover {
+  background: #efefef;
+}
+.search_bar .search_dropdown li.selected {
+  background: #1bbbfb;
+  color: #fff;
+}
+.search_bar.small input[type=text] {
+  font-size: 18px;
+}
+.search_bar.large input[type=text] {
+  font-size: 24px;
+}
+.search_bar.larger input[type=text] {
+  font-size: 30px;
+}
+.search_bar.huge input[type=text] {
+  font-size: 36px;
+}
+.search_bar ::-webkit-input-placeholder {
+  font-weight: 400;
+}
+.search_bar ::-moz-placeholder {
+  font-weight: 400;
+}
+.search_bar :-ms-input-placeholder {
+  font-weight: 400;
+}
+.search_bar ::placeholder {
+  font-weight: 400;
+}
+
+/*End of the search bar*/
