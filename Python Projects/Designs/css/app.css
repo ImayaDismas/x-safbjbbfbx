@@ -1,7 +1,7 @@
 body {
     background: #fafafa;
     color: #1BBBFB;
-    font-family: sans-serif;
+    font-family: 'Crete Round';
 }
 
 .toolbar {
@@ -18,7 +18,10 @@ body {
     -moz-box-sizing: border-box;
     background-color: #1BBBFB;
 }
-
+.fi-home{
+    margin-left: 20px;
+    margin-right: 20px;
+}
 #toolbar {
     display: block;
     z-index: 10;
@@ -81,13 +84,13 @@ ul {
     position: relative;
     background: #ccc;
     width: 100%;
-    height: 70px;
+    height: 60px;
     margin-bottom: 5px;
 }
 
 .link_bg {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     position: absolute;
     background: #1BBBFB;
     color: #fff;
@@ -148,7 +151,6 @@ ul {
 }
 
 .icon i {
-    top: 22px;
     position: relative;
 }
 
@@ -179,7 +181,10 @@ i {
 
 .footer {
     bottom: 0;
+    left: 0;
+    right: 0;
     padding: 1rem;
+    position: fixed;
     text-align: center;
 }
 
@@ -361,20 +366,16 @@ i {
 /*End of the search bar*/
 
 
-/*button css*/
-
-.container {
-    position: absolute;
-    width: 130px;
-    height: 40px;
-    text-align: center;
+.menu h1{
+    font-family: 'Crete Round';  
 }
 
-.container1 {
-    position: absolute;
-    width: 130px;
-    height: 40px;
+.align-button{
+    float:right;
+}
+.map{
     text-align: center;
+    font-size:18px;
 }
 
 button {
@@ -406,3 +407,98 @@ button:active {
 
 
 /*end of button css*/
+
+/*start of the drop down list*/
+
+.dropdown1 {
+    text-align: left;
+    color: #1bbbfb;
+    background: #fff;
+    border: #efefef solid 1px;
+    border-radius: 3px;
+    box-shadow: 0 0 3px #efefef;
+}
+
+.dropdown1.closed .dropdown-menu {
+    margin-top: 0px;
+}
+
+.dropdown1.closed .dropdown-menu li {
+    height: 0px;
+}
+
+.dropdown1.closed .title {
+    border-bottom: none;
+}
+
+.dropdown1.closed .title:after {
+    margin-top: -16px;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+
+.dropdown1 .title {
+    width: 100%;
+    position: relative;
+    height: 40px;
+    padding: 12px;
+    cursor: pointer;
+    color: #1bbbfb;
+    border-bottom: 1px solid #D9E1E4;
+}
+
+.dropdown1 .title:after {
+    display: block;
+    content: "▾";
+    position: absolute;
+    right: 14px;
+    color: #1bbbfb;
+    margin-top: -16px;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.dropdown1 .dropdown-menu {
+    position: relative;
+    overflow: hidden;
+    max-height: 200px;
+    color: #1bbbfb;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+    -webkit-box-sizing: "border-box";
+    -moz-box-sizing: "border-box";
+    box-sizing: "border-box";
+}
+
+.dropdown1 ul {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.dropdown1 ul li {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #D9E1E4;
+    padding: 0 12px;
+    vertical-align: top;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-transition: margin-top 0.5s, height 0.5s;
+    -moz-transition: margin-top 0.5s, height 0.5s;
+    transition: margin-top 0.5s, height 0.5s;
+}
+
+.dropdown1 ul li:hover {
+    background-color: #1bbbfb;color: #FFFFFF;
+}
+
+/*end of the dropdown list*/
