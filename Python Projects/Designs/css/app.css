@@ -134,8 +134,9 @@ ul {
     -ms-transition: all .5s ease-in-out;
     transition: all .5s ease-in-out;
 }
+
 .multiple{
-    padding: 0 0 0 13px;
+    padding-top: -16px;
 }
 
 .icon {
