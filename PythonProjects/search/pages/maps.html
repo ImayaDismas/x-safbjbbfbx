@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ID KEEPER</title>
+<link href="http://fonts.googleapis.com/css?family=Crete+Round" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="../css/foundation.css">
+<link rel="stylesheet" href="../foundation-icons/foundation-icons.css" />
+<link rel="stylesheet" href="../css/app.css">
+    
+</head>
+    <body>
+<!--        Body-->
+        
+         <!-- Start Top Bar -->
+        <div class="top-bar">
+          <div class="row">
+            <div class="top-bar-left">
+              <ul class="dropdown menu" data-dropdown-menu>
+                <li><a onclick="history.back(-1)" ><i class="fi-arrow-left"></i></a></li>
+                <li><a href="../index.html"><i class="fi-home"></i></a></li>
+                <li class="menu-text"><h1><a href="index.html">ID Keeper</a></h1></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- End Top Bar -->
+    
+    <br>
+    
+    <div class="row medium-6 large-5 columns">
+        <div class="blog-post map be_wrapper">
+            <h5><strong>Choose Location</strong></h5>  
+            <form action="../location.php" method="post">
+               <!-- <input type='hidden' name='lat' id='lat'>
+                <input type='hidden' name='lng' id='lng'> -->
+     		<input id="pac-input" class="controls" type="text" name="location" placeholder="Search Box">
+                <div id="map" style="height: 300px;"></div>
+                <br>
+                <button id="button" type="submit">SUBMIT</button>
+            </form>
+        </div>
+    </div>
+    
+<!--      footer -->
+<!--     end of footer   -->
+<!--        Scripts-->
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZZSqKqrihhvHvqAX-oMwtsPvxfK5o6Vo&callback=initMap""></script> -->
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZZSqKqrihhvHvqAX-oMwtsPvxfK5o6Vo&libraries=places&callback=initAutocomplete"
+         async defer></script>
+    <script src="../js/vendor/jquery.js"></script>
+    <script src="../js/vendor/what-input.js"></script>
+    <script src="../js/vendor/foundation.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/maps.js"></script>
+    </body>        
+</html>
