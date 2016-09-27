@@ -32,56 +32,74 @@
 <!--    main content section-->
    <div class="row medium-6 large-5 columns">
         <div class="blog-post">
-        
-        <?php 
+        	<?php 
+	     if ($_POST['search'] != "") {
+            $_POST['search'] = filter_var($_POST['search'], FILTER_SANITIZE_STRING);
+            if ($_POST['search'] == "") {
+		    //echo "$search is a valid search address.<br/><br/>";
+		    //load database connection
+            	echo "<br/><br/><br/><br/><br/><br/><h5 style=\"text-align:center;\">$search is <strong>NOT</strong> a valid Name.</h5><br/>";
+		    	echo "<h5 style=\"text-align:center;\"><strong>Go back</strong> and enter a valid Name.</h5><br/><br/>";
+            }
 
-		//load database connection
-		    $host = "localhost";
-		    $user = "root";
-		    $password = "nyagaka2013";
-		    $database_name = "idkeeper";
-		    $pdo = new PDO("mysql:host=$host;dbname=$database_name", $user, $password, array(
-		    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-		    ));
+            else {
+				    $host = "localhost";
+				    $user = "root";
+				    $password = "nyagaka2013";
+				    $database_name = "idkeeper";
+				    $pdo = new PDO("mysql:host=$host;dbname=$database_name", $user, $password, array(
+				    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+				    ));
 
-		// Search from MySQL database table
-		$search=$_POST['search'];
-		$query = $pdo->prepare("select * from train_data where first_name LIKE '%$search%' OR last_name LIKE '%$search%'  LIMIT 0 , 100");
-		$query->bindValue(1, "%$search%", PDO::PARAM_STR);
-		$query->execute();
+				// Search from MySQL database table
+				$search=$_POST['search'];
+				$query = $pdo->prepare("select * from train_data where first_name LIKE '%$search%' OR last_name LIKE '%$search%'  LIMIT 0 , 100");
+				$query->bindValue(1, "%$search%", PDO::PARAM_STR);
+				$query->execute();
 
-		// Display search result
-			 if (!$query->rowCount() == 0) {
-				//echo "Search found :<br/>";
-				echo "<h3>Results Found:</h3>";             
-			    while ($results = $query->fetch()) {  
-				echo "<div class=\"row small-up-2 be_wrapper\">";
-				     echo "<div class=\"column\">";
-					   echo '<img height="150" width="150" class=\"thumbnail\" src="'.$results['image'].'" />';
-					   
-				     echo "</div>";
-				     echo "<div class=\"column\">";
-					  echo "<br/>";
-					  echo "<strong><h5>  " .$results['first_name'] . "  " .$results['last_name']. "</strong></h5>";
-					  echo $results['gender'];
-					  echo "<br/>";
-					  echo $results['phone_no'];
-					  echo "<br/>";
-					  echo $results['email'];
-					  echo "<br/>";
-					  echo $results['place'];
-					   
-			//                echo $results['email'];
-				    echo "</div>";
-				echo "</div>";
-				echo "<br/>";                
-				    }
+				// Display search result
+					 if (!$query->rowCount() == 0) {            
+					    while ($results = $query->fetch()) {
+						$id = $results['id'];  
+						echo "<div class=\"row small-up-2 be_wrapper\">";
+						     echo "<div class=\"column\">";
+							   echo '<a href="#"><img height="150" width="150" class=\"thumbnail\" src="'.$results['image'].'" /></a>';
+							   
+						     echo "</div>";
+						     echo "<div class=\"column\">";
+							  echo "<br/>";
+							  echo "<a href=\"#\"><h5><strong>" .$results['first_name'] . "  " .$results['last_name']. "</strong></h5></a>";
+							  echo $results['gender'];
+							  echo "<br/>";
+							  echo $results['phone_no'];
+							  echo "<br/>";
+							  echo $results['email'];
+							  echo "<br/>";
+							  echo $results['place'];
 
-			} else {
-			    echo 'ERROR: No such name found';
+						    //more button
+						    echo "<form action=\"more_info.php\" method=\"post\">";
+							echo '<input  type="hidden" name="more" value="'.$results['id'].'"/>';
+							echo "<button type=\"submit\" id=\"button\" value=\"Search\">More Info</button>";
+						    echo "</form>";
+						    //end more button
+						    echo "</div>";
+						echo "</div>";
+						echo "<br/>";                
+						    }
+
+					} else {
+					    echo '<br/><br/><br/><br/><br/><br/><h5 style="text-align:center;"><strong>ERROR:<strong> No such Name found</h5>';
+					    
+					}
+				} 
 			}
-		?>
-        
+			else {
+	    		echo "<br/><br/><br/><br/><br/><br/><h5 style=\"text-align:center;\">Please enter your name.</h5><br/>";
+	    	}
+ 
+		    
+	?>
         </div>
     </div>
 
@@ -100,5 +118,6 @@
     <script src="js/vendor/what-input.js"></script>
     <script src="js/vendor/foundation.js"></script>
     <script src="js/app.js"></script>
+  
 </body>
 </html>

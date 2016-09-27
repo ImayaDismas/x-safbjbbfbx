@@ -31,10 +31,8 @@
    <div class="row">
         
         <?php 
-	     if (isset($_POST['email'])) {
-		$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		    //echo "$email is a valid email address.<br/><br/>";
+
+		//load database connection
 		    $host = "localhost";
 		    $user = "root";
 		    $password = "nyagaka2013";
@@ -44,15 +42,20 @@
 		    ));
 
 		// Search from MySQL database table
-		$email=$_POST['email'];
-		$query = $pdo->prepare("select * from train_data INNER JOIN topic_data ON train_data.topic_id = topic_data.id INNER JOIN group_data ON train_data.group_id = group_data.id where train_data.email LIKE '%$email%'  LIMIT 0 , 100");
-		$query->bindValue(1, "%$email%", PDO::PARAM_STR);
+		$id = $_POST['more'];
+		$query = $pdo->prepare("select * from train_data INNER JOIN group_data ON train_data.group_id = group_data.id where train_data.id LIKE '%$id%'  LIMIT 0 , 1");
+		$query1 = $pdo->prepare("select * from train_data INNER JOIN topic_data ON train_data.topic_id = topic_data.id where train_data.id LIKE '%$id%'  LIMIT 0 , 1");
+		$query->bindValue(1, "%$id%", PDO::PARAM_STR);
+		$query1->bindValue(1, "%$id%", PDO::PARAM_STR);
 		$query->execute();
+		$query1->execute();
 
 		// Display search result
-			 if (!$query->rowCount() == 0) {
+			 if ((!$query->rowCount() == 0) && (!$query1->rowCount() == 0)) {
 				//echo "Search found :<br/>";             
-			    while ($results = $query->fetch()) {  
+			    //while ($results = $query->fetch()) { 
+				$results = $query->fetch();
+				$results1 = $query1->fetch(); 
 				echo "<div class=\"medium-6 columns one\">";
 					echo "<div class=\"be_wrapper\">";
 					echo "<div class=\"row small-up-3\">";
@@ -85,7 +88,7 @@
                                           echo "<br/>";
 			                  echo "<strong>Group: </strong>".$results['groups'];
 					  echo "<br/>";
-					  echo "<strong>Topic: </strong>".$results['topic'];
+					  echo "<strong>Topic: </strong>".$results1['topic'];
 					  echo "<div class=\"row small-up-2\">";
 					    echo "<div class=\"column\">";
 							echo "<button id=\"button\">CHECK FOR UPDATES</button>";
@@ -97,30 +100,12 @@
 				   echo "</div>";
 				echo "</div>";
                     echo "<br/><br/>"; 
-				    }
+				    //}
 
 			} else {
-			     echo "<div class=\"row medium-6 large-5 columns\">";
-          			echo "<div class=\"blog-post\">";
-			     		echo 'ERROR: No such number found';
-			         echo "</div>";
-		    	     echo "</div>";
+			    echo 'ERROR: No such number found';
 			}
-		} else {
-		    //echo "<div class=\"row medium-6 large-5 columns\">";
-          		//echo "<div class=\"blog-post\">";
-		    echo "<br/><br/><br/><br/><br/><br/><h5 style=\"text-align:center;\">$email is <strong>NOT</strong> a valid email address.</h5><br/>";
-		    echo "<h5 style=\"text-align:center;\"><strong>Go back</strong> and enter a valid email address.</h5><br/><br/>";
-			//echo "</div>";
-		    //echo "</div>";
-		}
-	    }
-	    else {
-	    	echo "<br/><br/><br/><br/><br/><br/><h5 style=\"text-align:center;\">Please enter your email address.</h5><br/>";
-        }
- 
-		    
-	?>
+		?>
     </div>
 
 <!--    end of main content section-->

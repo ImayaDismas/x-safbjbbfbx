@@ -51,9 +51,7 @@
 		$query->execute();
 
 		// Display search result
-			 if (!$query->rowCount() == 0) {
-				//echo "Search found :<br/>";
-				echo "<h3>Results Found:</h3>";             
+			 if (!$query->rowCount() == 0) {             
 			    while ($results = $query->fetch()) {  
 				echo "<div class=\"row small-up-2 be_wrapper\">";
 				     echo "<div class=\"column\">";
@@ -70,8 +68,13 @@
 					  echo $results['email'];
 					  echo "<br/>";
 					  echo $results['place'];
-			//                echo $results['email'];
-					  //echo "<button id=\"button\">View more</button>";
+			
+				    //more button
+				    echo "<form action=\"more_info.php\" method=\"post\">";
+					echo '<input  type="hidden" name="more" value="'.$results['id'].'"/>';
+					echo "<button type=\"submit\" id=\"button\" value=\"Search\">More Info</button>";
+				    echo "</form>";
+				    //end more button
 				    echo "</div>";
 				echo "</div>";
                     echo "<br/><br/>"; 

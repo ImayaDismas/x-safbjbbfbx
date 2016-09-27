@@ -31,6 +31,7 @@
 
 <!--    main content section-->
    <div class="row medium-6 large-5 columns">
+   <div id="content">
         <div class="blog-post">
         
         <?php 
@@ -47,7 +48,7 @@
 		// Search from MySQL database table
 		$group=$_POST['group_selected'];
 		$name=$_POST['name'];
-		$query = $pdo->prepare("select * from group_data JOIN train_data ON group_data.id = train_data.group_id where group_data.groups LIKE '%$group%' AND (train_data.first_name LIKE '%$name%' OR train_data.last_name LIKE '%$name%') LIMIT 0 , 100");
+		$query = $pdo->prepare("select * from group_data JOIN train_data ON group_data.id = train_data.group_id where group_data.groups LIKE '%$group%' AND (train_data.first_name LIKE '%$name%' OR train_data.last_name LIKE '%$name%') LIMIT 0 , 10");
 		$query->bindValue(1, "%$name%", PDO::PARAM_STR);
 		$query->execute();
 
@@ -72,7 +73,12 @@
 					  echo "<br/>";
 					  echo "<strong>Group: </strong>".$results['groups'];
 					   
-			//                echo $results['email'];
+				    //more button
+				    echo "<form action=\"more_info.php\" method=\"post\">";
+					echo '<input  type="hidden" name="more" value="'.$results['id'].'"/>';
+					echo "<button type=\"submit\" id=\"button\" value=\"Search\">More Info</button>";
+				    echo "</form>";
+				    //end more button
 				    echo "</div>";
 				echo "</div>";
 				echo "<br/><br/>";
@@ -81,8 +87,9 @@
 			} else {
 			    echo 'ERROR: No such group found';
 			}
-		?>
+		?> 
         
+        </div>
         </div>
     </div>
 

@@ -72,7 +72,12 @@
 					  echo "<br/>";
 					  echo "<strong>Topic: </strong>".$results['topic'];
 					   
-			//                echo $results['email'];
+				    //more button
+				    echo "<form action=\"more_info.php\" method=\"post\">";
+					echo '<input  type="hidden" name="more" value="'.$results['id'].'"/>';
+					echo "<button type=\"submit\" id=\"button\" value=\"Search\">More Info</button>";
+				    echo "</form>";
+				    //end more button
 				    echo "</div>";
 				echo "</div>";
 				echo "<br/><br/>";
