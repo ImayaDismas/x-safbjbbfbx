@@ -1,0 +1,55 @@
+[
+    {
+        "fname"      : "George",
+        "lname"     : "Maina",
+        "gender"    : "male",
+        "color"     : "white-mustard",
+        "number"     : "0700123458",
+        "age"       : "5 years",
+        "email"     : "",
+        "image"     : "http://placehold.it/450x350"
+    },
+    {
+        "fname"      : "Pety",
+        "lname"     : "Cheng",
+        "gender"    : "female",
+        "color"     : "white-black-mustard",
+        "number"     : "0700417852",
+        "age"       : "3 years",
+        "email"     : "",
+        "image"     : "http://placehold.it/450x350"
+    },
+    {
+        "fname"      : "Alex",
+        "lname"     : "Leteipa",
+        "gender"    : "male",
+        "color"     : "white-grey-black",
+        "number"     : "0700415515",
+        "age"       : "3 years",
+        "email"     : "",
+        "image"     : "http://placehold.it/450x350"
+    },
+    {
+        "fname"      : "Rex",
+        "lname"     : "Rugano",
+        "gender"    : "male",
+        "color"     : "white-mustard",
+        "number"     : "0700415115",
+        "age"       : "2 years",
+        "email"     : "",
+        "image"     : "http://placehold.it/450x350"
+    },
+    { 
+        "number": "9999999999", 
+         "name": "Salman Khan", 
+         "gender": "Male", 
+         "spamScore": 3372, 
+         "spamType": "TOP_SPAMMER", 
+         "address": null, 
+         "email": null, 
+         "facebook": null, 
+         "twitter": null, 
+         "image": null, 
+         "tags": "Finance, Insurance & Legal,Bank," 
+    }
+]
