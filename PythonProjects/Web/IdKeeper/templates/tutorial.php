@@ -7,7 +7,7 @@ $def with (form, text)
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    
+
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/tutorial.css" />
@@ -34,9 +34,9 @@ $def with (form, text)
 <body ng-controller="IdKeeperCtrl">
 
     <div data-role="page" id="pageone">
-       
+
         <div data-role="header" class="header">
-          
+
            <div class="ui-grid-b ui-responsive">
                <div class="ui-block-a">
                </div>
@@ -58,16 +58,17 @@ $def with (form, text)
                         <p>Search Page</p>
                         <input type="search" name="name"  id="name" placeholder="Search..." />
                         <input class="button" type="submit" value="Search"/>
+                        <input type="button" value="Create Files" onclick="exec('./idkeeper.py');" />
                   </form>
                  <br>
                  <br>
-                 <span id="foo">$text</span> 
-                 
+                 <span id="foo">$text</span>
+
               </div>
               <div class="ui-block-c">
              </div>
             </div>
-        
+
         </div>
 
         <div class="footer" data-role="footer">
@@ -87,7 +88,7 @@ $def with (form, text)
             <h1>ID KEEPER</h1>
 
         </div>
-        
+
         <div class="ui-grid-b ui-responsive">
              <div class="ui-block-a">
              </div>
@@ -104,7 +105,7 @@ $def with (form, text)
             <h1>Developed by Synergetic, All rights reserved</h1>
         </div>
     </div>
-    
+
     <div data-role="page" data-dialog="true" id="pagethree">
         <div data-role="header" data-theme="b">
             <h1>Search Results</h1>
@@ -119,13 +120,13 @@ $def with (form, text)
             <h1>&copy;Synergetic Limited</h1>
         </div>
     </div>
-    
+
     <script type="text/javascript" src="/static/jquery.js"></script>
      <script>
 
-    
+
     </script>
-    
+
 
 </body>
 

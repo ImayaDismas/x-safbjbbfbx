@@ -4,19 +4,19 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    
+
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/tutorial.css" />
     <script type="text/javascript" src="/static/jquery.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
      <script type="text/javascript">
-         
+
         var IdKeeperApp = angular.module('IdKeeperApp', []);
         var i=1;
 //        var users=[];
         IdKeeperApp.controller('IdKeeperCtrl', function ($scope, $http){
-          
+
         $scope.findValue= function () {
           $http.get('data.json').success(function(data) {
           $scope.users=[];
@@ -32,16 +32,16 @@
         });
         }
       });
-        
+
     </script>
 </head>
 
 <body ng-controller="IdKeeperCtrl">
 
     <div data-role="page" id="pageone">
-       
+
         <div data-role="header" class="header">
-          
+
            <div class="ui-grid-b ui-responsive">
                <div class="ui-block-a">
                </div>
@@ -67,18 +67,18 @@
                         <br>
 <!--                        <input class="button" ng-click="findValue()" type="submit" value="Search"/>-->
                        <div class="btn-right">
-                         <a href="#pagetwo" class="ui-btn ui-btn-inline" ng-click="findValue()">Search</a>  
+                         <a href="#pagetwo" class="ui-btn ui-btn-inline" ng-click="findValue()">Search</a>
                        </div>
-                        
+
                   </form>
                   <br>
-                  <br>                 
-                 
+                  <br>
+
               </div>
               <div class="ui-block-c">
              </div>
             </div>
-        
+
         </div>
 
         <div class="footer" data-role="footer">
@@ -95,7 +95,7 @@
     </div>
     <div data-role="page" id="pagetwo">
         <div data-role="header" class="header">
-          
+
            <div class="ui-grid-b ui-responsive">
                <div class="ui-block-a">
                </div>
@@ -107,23 +107,23 @@
             </div>
 
         </div>
-        
+
         <div class="ui-grid-b ui-responsive">
              <div class="ui-block-a">
              </div>
               <div class="ui-block-b">
                     <div ng-repeat="user in users">
-                    
+
                     <div class="display">
                     <br><br>
                     <img width="150" height="150" ng-src="{{user.image}}">
                     </div>
-    
+
                         <div class="display">
                             <h3><strong>{{user.fname}} {{user.lname}}</strong></h3>
                             <p>{{user.email}}</p>
-                            <p>{{user.number}}</p> 
-                            <p>{{user.gender}}</p> 
+                            <p>{{user.number}}</p>
+                            <p>{{user.gender}}</p>
                             <p>{{user.age}}</p>
                             <p>{{user.color}}</p>
                         </div>
@@ -131,11 +131,11 @@
                     <div class="btn-left">
                         <a href="#pagethree" class="ui-btn ui-btn-inline ui-btn-b">View More</a>
                     </div>
-                    
+
                     <div class="btn-right">
-                       <a href="#pageone" class="ui-btn ui-btn-inline">Back</a> 
+                       <a href="#pageone" class="ui-btn ui-btn-inline">Back</a>
                     </div>
-                                        
+
               </div>
               <div class="ui-block-c">
              </div>
@@ -153,7 +153,7 @@
            </div>
         </div>
     </div>
-    
+
     <div data-role="page" data-dialog="true" id="pagethree">
         <div data-role="header" data-theme="b">
             <h1>Search Results</h1>
@@ -173,13 +173,13 @@
             <h1>&copy;Synergetic Limited</h1>
         </div>
     </div>
-    
+
     <script type="text/javascript" src="/static/jquery.js"></script>
      <script>
 
-    
+
     </script>
-    
+
 
 </body>
 
