@@ -10,6 +10,7 @@
 }
 .display{
     display: inline-block;
+    width: 40%;
 }
 .btn-right{
     float: right;

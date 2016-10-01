@@ -66,15 +66,16 @@
                         <input type="search" name="name" ng-model="search_param"  id="name" placeholder="Search..." />
                         <br>
 <!--                        <input class="button" ng-click="findValue()" type="submit" value="Search"/>-->
-                       <div class="btn-right">
-                         <a href="#pagetwo" class="ui-btn ui-btn-inline" ng-click="findValue()">Search</a>
-                       </div>
+                       
 
                   </form>
                   <br>
                   <br>
-
+                <div class="btn-right"> 
+                    <a href="#pagetwo" class="ui-btn ui-btn-inline" ng-click="findValue()">Search</a>
+                </div>
               </div>
+               
               <div class="ui-block-c">
              </div>
             </div>
@@ -161,10 +162,18 @@
 
         <div data-role="main" class="ui-content">
             <div ng-repeat="user in users">
-                <h3><strong>{{user.fname}} {{user.lname}}</strong></h3>
-                <p>{{user.gender}}</p>
-                <p>{{user.age}}</p>
-                <p>{{user.color}}</p>
+                <div class="display">
+                    <br><br>
+                    <img width="150" height="150" ng-src="{{user.image}}">
+                </div>
+                <div class="display">
+                    <h3><strong>{{user.fname}} {{user.lname}}</strong></h3>
+                    <p>{{user.email}}</p>
+                    <p>{{user.number}}</p>
+                    <p>{{user.gender}}</p>
+                    <p>{{user.age}}</p>
+                    <p>{{user.color}}</p>
+                </div>
             </div>
             <a href="#pagetwo" class="ui-btn ui-btn-inline">Back</a>
         </div>
