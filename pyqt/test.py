@@ -1,56 +1,180 @@
 #!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
-"""
-ZetCode PyQt5 tutorial
-
-In this example, we create three toggle buttons.
-They will control the background colour of a
-QFrame.
-
-author: Jan Bodnar
-website: zetcode.com
-last edited: January 2015
-"""
-
 import sys
 from PyQt5.QtWidgets import (QWidget, QToolTip,
-    QPushButton, QLabel, QComboBox, QLineEdit, QTextEdit, QGridLayout, QLCDNumber, QSlider,
+    QPushButton, QAction, QCheckBox, QCalendarWidget, QProgressBar, QLabel, QSpinBox, QComboBox, QLineEdit, QTextEdit, QGridLayout, QLCDNumber, QSlider,
     QVBoxLayout, QApplication)
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow, QWidget, QDesktopWidget, QMessageBox, QPushButton, QApplication
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt, QTimer, pyqtSlot
-
-class Window(QWidget):
-
-    def __init__(self, parent = None):
-
-        QWidget.__init__(self, parent)
-
-        button = QPushButton(self.tr("Click me!"))
-
-        button.clicked.connect(self.fade)
-
-        layout = QVBoxLayout(self)
-        layout.addWidget(button)
-
-    def fade(self):
-
-        self.setWindowOpacity(0.5)
-        QTimer.singleShot(1000, self.unfade)
-
-    def unfade(self):
-
-        self.setWindowOpacity(1)
+from PyQt5.QtCore import QTimer
 
 
-if __name__ == "__main__":
+class Window(QMainWindow):
 
+    def __init__(self):
+        super(Window, self).__init__()
+        self.setGeometry(50, 50, 500, 300)
+        self.setWindowTitle("PyQT tuts!")
+        self.setWindowIcon(QIcon('web.png'))
+
+        extractAction = QAction("&GET TO THE CHOPPAH!!!", self)
+        extractAction.setShortcut("Ctrl+Q")
+        extractAction.setStatusTip('Leave The App')
+        extractAction.triggered.connect(self.close_application)
+
+        openEditor = QAction("&Editor", self)
+        openEditor.setShortcut("Ctrl+E")
+        openEditor.setStatusTip('Open Editor')
+        openEditor.triggered.connect(self.editor)
+
+        openFile = QAction("&Open File", self)
+        openFile.setShortcut("Ctrl+O")
+        openFile.setStatusTip('Open File')
+        openFile.triggered.connect(self.file_open)
+
+        saveFile = QAction("&Save File", self)
+        saveFile.setShortcut("Ctrl+S")
+        saveFile.setStatusTip('Save File')
+        saveFile.triggered.connect(self.file_save)
+
+        self.statusBar()
+
+        mainMenu = self.menuBar()
+
+        fileMenu = mainMenu.addMenu('&File')
+        fileMenu.addAction(extractAction)
+        fileMenu.addAction(openFile)
+        fileMenu.addAction(saveFile)
+
+        editorMenu = mainMenu.addMenu("&Editor")
+        editorMenu.addAction(openEditor)
+
+        self.home()
+
+    def home(self):
+        btn = QPushButton("Quit", self)
+        btn.clicked.connect(self.close_application)
+        btn.resize(btn.minimumSizeHint())
+        btn.move(0,100)
+
+        extractAction = QAction(QIcon('web.png'), 'Flee the Scene', self)
+        extractAction.triggered.connect(self.close_application)
+        self.toolBar = self.addToolBar("Extraction")
+        self.toolBar.addAction(extractAction)
+
+        fontChoice = QAction('Font', self)
+        fontChoice.triggered.connect(self.font_choice)
+        #self.toolBar = self.addToolBar("Font")
+        self.toolBar.addAction(fontChoice)
+
+        color = QColor(0, 0, 0)
+
+        fontColor = QAction('Font bg Color', self)
+        fontColor.triggered.connect(self.color_picker)
+
+        self.toolBar.addAction(fontColor)
+
+        checkBox = QCheckBox('Enlarge Window', self)
+        checkBox.move(300, 25)
+        checkBox.stateChanged.connect(self.enlarge_window)
+
+        self.progress = QProgressBar(self)
+        self.progress.setGeometry(200, 80, 250, 20)
+
+        self.btn = QPushButton("Download",self)
+        self.btn.move(200,120)
+        self.btn.clicked.connect(self.download)
+
+        #print(self.style().objectName())
+        self.styleChoice = QLabel("Windows Vista", self)
+
+        comboBox = QComboBox(self)
+        comboBox.addItem("motif")
+        comboBox.addItem("Windows")
+        comboBox.addItem("cde")
+        comboBox.addItem("Plastique")
+        comboBox.addItem("Cleanlooks")
+        comboBox.addItem("windowsvista")
+
+        comboBox.move(50, 250)
+        self.styleChoice.move(50,150)
+        comboBox.activated[str].connect(self.style_choice)
+
+        cal = QCalendarWidget(self)
+        cal.move(500,200)
+        cal.resize(200,200)
+
+        self.show()
+
+    def file_open(self):
+        name = QFileDialog.getOpenFileName(self, 'Open File')
+        file = open(name,'r')
+
+        self.editor()
+
+        with file:
+            text = file.read()
+            self.textEdit.setText(text)
+
+    def file_save(self):
+        name = QFileDialog.getSaveFileName(self, 'Save File')
+        file = open(name,'w')
+        text = self.textEdit.toPlainText()
+        file.write(text)
+        file.close()
+
+    def color_picker(self):
+        color = QColorDialog.getColor()
+        self.styleChoice.setStyleSheet("QWidget { background-color: %s}" % color.name())
+
+    def editor(self):
+        self.textEdit = QTextEdit()
+        self.setCentralWidget(self.textEdit)
+
+
+    def font_choice(self):
+        font, valid = QFontDialog.getFont()
+        if valid:
+            self.styleChoice.setFont(font)
+
+
+    def style_choice(self, text):
+        self.styleChoice.setText(text)
+        QApplication.setStyle(QStyleFactory.create(text))
+
+
+    def download(self):
+        self.completed = 0
+
+        while self.completed < 100:
+            self.completed += 0.0001
+            self.progress.setValue(self.completed)
+
+    def enlarge_window(self, state):
+        if state == QtCore.Qt.Checked:
+            self.setGeometry(50,50, 1000, 600)
+        else:
+            self.setGeometry(50, 50, 500, 300)
+
+    def close_application(self):
+        choice = QMessageBox.question(self, 'Extract!',
+                                            "Get into the chopper?",
+                                            QMessageBox.Yes | QMessageBox.No)
+        if choice == QMessageBox.Yes:
+            print("Extracting Naaaaaaoooww!!!!")
+            sys.exit()
+        else:
+            pass
+
+
+def run():
     app = QApplication(sys.argv)
-    window = Window()
-    window.show()
+    ex = Window()
     sys.exit(app.exec_())
+
+
+run()
