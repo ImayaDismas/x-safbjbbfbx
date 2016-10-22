@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
 import sys
+import os, errno
+import configparser
 from PyQt5.QtWidgets import (QWidget, QToolTip,
     QPushButton, QLabel, QSpinBox, QComboBox, QLineEdit, QTextEdit, QGridLayout, QLCDNumber, QSlider,
     QVBoxLayout, QApplication)
@@ -12,6 +14,8 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
 
+config = configparser.RawConfigParser()
+config.add_section('Settings')
 
 class GateKeeper(QMainWindow, QWidget):
 
@@ -51,6 +55,7 @@ class GateKeeper(QMainWindow, QWidget):
         self.technology.addItem("2G")
         self.technology.addItem("3G")
         self.technology.addItem("4G")
+        self.technology.activated[str].connect(self.techValue)
 
         self.technology.move(250, 175)
         layout.addWidget(self.technology)
@@ -63,6 +68,7 @@ class GateKeeper(QMainWindow, QWidget):
         self.modem.addItem("Modem 4")
         self.modem.addItem("Modem 5")
         self.modem.addItem("Modem 6")
+        self.modem.activated[str].connect(self.modemValue)
 
         self.modem.move(250, 250)
         layout.addWidget(self.modem)
@@ -74,6 +80,7 @@ class GateKeeper(QMainWindow, QWidget):
         self.mode.addItem("Mode")
         self.mode.addItem("Accept")
         self.mode.addItem("Reject")
+        self.mode.activated[str].connect(self.modeValue)
 
         self.mode.move(420, 70)
         layout.addWidget(self.mode)
@@ -90,6 +97,7 @@ class GateKeeper(QMainWindow, QWidget):
         self.lac.addItem("8")
         self.lac.addItem("9")
         self.lac.addItem("10")
+        self.lac.activated[str].connect(self.lacValue)
 
         self.lac.move(420, 120)
         layout.addWidget(self.lac)
@@ -102,6 +110,7 @@ class GateKeeper(QMainWindow, QWidget):
         layout.addWidget(self.cid)
         self.cidedit = QLineEdit(self)
         # self.cidedit.move(480, 170)
+        self.cidedit.textChanged[str].connect(self.cidChanged)
         self.cidedit.setGeometry(480, 170, 150, 30)
         layout.addWidget(self.cidedit)
 
@@ -110,6 +119,7 @@ class GateKeeper(QMainWindow, QWidget):
         layout.addWidget(self.channel)
         self.channeledit = QLineEdit(self)
         # self.channeledit.move(480, 220)
+        self.channeledit.textChanged[str].connect(self.channelChanged)
         self.channeledit.setGeometry(480, 220, 150, 30)
         layout.addWidget(self.channeledit)
 
@@ -130,6 +140,7 @@ class GateKeeper(QMainWindow, QWidget):
         self.sld.setRange(0,20)
         self.sld.setSingleStep(1)
         self.sld.setGeometry(420, 270, 300, 30)
+        self.sld.valueChanged[int].connect(self.sliderValue)
         self.sld.valueChanged.connect(self.valueSpinBox.setValue)
         layout.addWidget(self.sld)
 
@@ -204,10 +215,14 @@ class GateKeeper(QMainWindow, QWidget):
 
         sender = self.sender()
         if sender.text() == "START":
+            # Writing our configuration file to 'settings.config'
+            with open('settings.config', 'w') as configfile:
+                config.write(configfile)
             self.statusBar().setStyleSheet("QStatusBar{padding-left:8px;background:rgba(255,255,0);color:black;font-weight:bold;}")
             self.statusBar().showMessage('Setting up...........')
             QTimer.singleShot(3000, self.readyRunning)
         elif sender.text() == "STOP":
+            open('settings.config', 'w')
             self.statusBar().setStyleSheet("QStatusBar{padding-left:8px;background:rgba(255,0,0,255);color:white;font-weight:bold;}")
             self.statusBar().showMessage('Stopped')
         else:
@@ -221,11 +236,69 @@ class GateKeeper(QMainWindow, QWidget):
         self.statusBar().showMessage('Ready')
 
 
-    # def onActivated(self, text):
-    #
-    #     self.lbl.setText(text)
-    #     self.lbl.adjustSize()
+    def techValue(self, text):
+
+        config.set('Settings', 'Technology', text)
+
+        # # Writing our configuration file to 'settings.config'
+        # with open('settings.config', 'w') as configfile:
+        #     config.write(configfile)
+
+    def modemValue(self, text):
+
+        config.set('Settings', 'Modem', text)
+
+        # # Writing our configuration file to 'settings.config'
+        # with open('settings.config', 'w') as configfile:
+        #     config.write(configfile)
+
+    def modeValue(self, text):
+
+        config.set('Settings', 'Mode', text)
+
+        # # Writing our configuration file to 'settings.config'
+        # with open('settings.config', 'w') as configfile:
+        #     config.write(configfile)
+
+    def lacValue(self, text):
+
+        config.set('Settings', 'Lac', text)
+
+        # # Writing our configuration file to 'settings.config'
+        # with open('settings.config', 'w') as configfile:
+        #     config.write(configfile)
+
+    def sliderValue(self, value):
+
+        config.set('Settings', 'PWD', value)
+
+        # # Writing our configuration file to 'settings.config'
+        # with open('settings.config', 'w') as configfile:
+        #     config.write(configfile)
+
+    def cidChanged(self, text):
+
+        config.set('Settings', 'CID', text)
+
+        # # Writing our configuration file to 'settings.config'
+        # with open('settings.config', 'w') as configfile:
+        #     config.write(configfile)
+
+    def channelChanged(self, text):
+
+        config.set('Settings', 'Channel', text)
+
+        # # Writing our configuration file to 'settings.config'
+        # with open('settings.config', 'w') as configfile:
+        #     config.write(configfile)
+
     def changeValue(self, text):
+
+        config.set('Settings', 'Operator', text)
+
+        # # Writing our configuration file to 'settings.config'
+        # with open('settings.config', 'w') as configfile:
+        #     config.write(configfile)
 
         if text == 'Safaricom':
             self.label.setPixmap(QPixmap('safaricom.png'))
