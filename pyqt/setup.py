@@ -187,6 +187,7 @@ class GateKeeper(QMainWindow, QWidget):
         self.center()
 
         # self.setLayout(layout)
+        layout.setSizeConstraint(QLayout:SetFixedSize);
         self.setWindowTitle('SetUp')
         self.setWindowIcon(QIcon('web.png'))
 
