@@ -126,7 +126,7 @@ class GateKeeper(QMainWindow, QWidget):
         # end of the edit text
 
         # this is the slider section
-        self.pwd = QLabel("Pwd", self)
+        self.pwd = QLabel("Pwr", self)
         self.pwd.move(420, 250)
         layout.addWidget(self.pwd)
 
@@ -187,7 +187,6 @@ class GateKeeper(QMainWindow, QWidget):
         self.center()
 
         # self.setLayout(layout)
-        layout.setSizeConstraint(QLayout:SetFixedSize);
         self.setWindowTitle('SetUp')
         self.setWindowIcon(QIcon('web.png'))
 

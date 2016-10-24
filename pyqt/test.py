@@ -91,11 +91,34 @@ class Dialog(QDialog):
         self.operator.addItem("Orange")
         layout.addWidget(self.operator, 2, 1)
 
-        self.smallEditor = QTextEdit()
-        self.smallEditor.setPlainText("This widget takes up about two thirds "
-                "of the grid layout.")
+        self.mode = QComboBox(self)
+        self.mode.addItem("Mode")
+        self.mode.addItem("Safaricom")
+        self.mode.addItem("Airtel")
+        self.mode.addItem("Orange")
 
-        layout.addWidget(self.smallEditor, 0, 2, 4, 1)
+        layout.addWidget(self.mode, 0, 2)
+
+        self.mode = QComboBox(self)
+        self.mode.addItem("Mode")
+        self.mode.addItem("Safaricom")
+        self.mode.addItem("Airtel")
+        self.mode.addItem("Orange")
+
+        layout.addWidget(self.mode, 1, 2)
+
+        self.mode = QComboBox(self)
+        self.mode.addItem("Mode")
+        self.mode.addItem("Safaricom")
+        self.mode.addItem("Airtel")
+        self.mode.addItem("Orange")
+
+        layout.addWidget(self.mode, 2, 2)
+
+        # self.smallEditor1 = QTextEdit()
+        # self.smallEditor1.setPlainText("This widget takes up about two thirds "
+        #         "of the grid layout.")
+        # layout.addWidget(self.smallEditor1, 1, 2, 2, 1)
 
         layout.setColumnStretch(1, 10)
         layout.setColumnStretch(2, 20)
