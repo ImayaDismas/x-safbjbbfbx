@@ -5,13 +5,14 @@
 # Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
-
+from time import gmtime, strftime
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QStringListModel
 from PyQt5.QtWidgets import (QCompleter, QLabel, QDesktopWidget)
 from PyQt5.QtWidgets import QDesktopWidget
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt
+import subprocess
 
 
 class Ui_Target(object):
@@ -20,7 +21,12 @@ class Ui_Target(object):
         Target.setWindowIcon(QIcon('web.png'))
 
         self.model = QStringListModel()
-        self.model.setStringList(['Dismas', 'Dennis', 'Daniel','Imaya', 'James', 'Pius', 'Victor'])
+        my_target = []
+        for i in range(1,61):
+            my_target.append("Target %i" % i)
+        #     item = QtWidgets.QListWidgetItem("Target %i" % i)
+        #     self.listWidget.addItem(item)
+        self.model.setStringList(my_target)
 
         self.completer = QCompleter()
         self.completer.setModel(self.model)
@@ -32,17 +38,22 @@ class Ui_Target(object):
         self.gridLayout.setContentsMargins(11, 11, 11, 11)
         self.gridLayout.setSpacing(6)
         self.gridLayout.setObjectName("gridLayout")
+
         self.lineEdit = QtWidgets.QLineEdit(self.centralWidget)
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit.setPlaceholderText("Search")
         self.lineEdit.setCompleter(self.completer)
+        self.lineEdit.setEnabled(True)
 
         self.gridLayout.addWidget(self.lineEdit, 0, 0, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(243, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 0, 1, 1, 1)
         self.pushButton = QtWidgets.QPushButton(self.centralWidget)
         self.pushButton.setObjectName("pushButton")
+        self.pushButton.clicked.connect(lambda:self.run('external.py'))
         self.gridLayout.addWidget(self.pushButton, 0, 2, 1, 1)
+
+
         spacerItem1 = QtWidgets.QSpacerItem(242, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 0, 3, 1, 1)
 
@@ -101,6 +112,7 @@ class Ui_Target(object):
 
         self.pushButton_5 = QtWidgets.QPushButton(self.centralWidget)
         self.pushButton_5.setObjectName("pushButton_5")
+        self.pushButton_5.clicked.connect(lambda:self.run('external.py'))
         self.gridLayout.addWidget(self.pushButton_5, 5, 2, 1, 2)
 
         self.pushButton_4 = QtWidgets.QPushButton(self.centralWidget)
@@ -116,7 +128,10 @@ class Ui_Target(object):
 
         self.listWidget_1 = QtWidgets.QListWidget(self.centralWidget)
         self.listWidget_1.setObjectName("listWidget_1")
+        self.gridLayout.addWidget(self.listWidget_1, 6, 4, 2, 2)
 
+        self.listWidget_1 = QtWidgets.QListWidget(self.centralWidget)
+        self.listWidget_1.setObjectName("listWidget_1")
         self.gridLayout.addWidget(self.listWidget_1, 6, 4, 2, 2)
 
 
@@ -129,7 +144,9 @@ class Ui_Target(object):
         self.statusBar = QtWidgets.QStatusBar(Target)
         self.statusBar.setObjectName("statusBar")
         self.statusBar.setStyleSheet("QStatusBar{padding-left:8px;background:rgb(11, 181, 255);color:white;font-weight:bold;}")
+        self.StatusMsg()
         Target.setStatusBar(self.statusBar)
+
         self.menuBar = QtWidgets.QMenuBar(Target)
         self.menuBar.setGeometry(QtCore.QRect(0, 0, 1200, 19))
         self.menuBar.setObjectName("menuBar")
@@ -155,14 +172,24 @@ class Ui_Target(object):
         self.textBrowser.setText('Think about ways you can tell your story in a unique, unexpected way to really draw the readers in. It\'s amazing what impression you can make on site visitors just by getting creative with the copy')
 
     def CallsButton(self):
+        self.listWidget_1.clear()
         calls = ['0700415505, Received, 09:22', '0700415505, Received, 09:22', '0700415505, Received, 09:22', '0700415505, Received, 09:22', '0700415505, Received, 09:22', '0700415505, Received, 09:22', '0700415505, Received, 09:22', '0700415505, Received, 09:22', '0700415505, Received, 09:22', '0700415505, Received, 09:22', '0700415505, Received, 09:22', '0700415505, Received, 09:22', '0700415505, Received, 09:22']
         for item in calls:
             self.listWidget_1.addItem(item)
 
     def SmsButton(self):
+        self.listWidget_1.clear()
         items = ['Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.', 'Think about ways you can tell your story in a unique, unexpected way to really draw the readers in.']
         for i in items:
             self.listWidget_1.addItem(i)
+
+    def StatusMsg(self):
+        # date_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        date_time = strftime("%Y-%m-%d %H:%M:%S")
+        self.statusBar.showMessage('STAT: Last seen Embakasi on '+ date_time)
+
+    def run(self, path):
+        subprocess.call(['python3',path])
 
     def retranslateUi(self, Target):
         _translate = QtCore.QCoreApplication.translate

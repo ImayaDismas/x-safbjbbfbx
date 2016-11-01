@@ -173,11 +173,11 @@ class GateKeeper(QMainWindow, QWidget):
         self.stopbtn.clicked.connect(self.buttonClicked)
         layout.addWidget(self.stopbtn)
 
-        self.qbtn = QPushButton('Quit', self)
-        self.qbtn.clicked.connect(QCoreApplication.instance().quit)
-        self.qbtn.resize(self.qbtn.sizeHint())
-        self.qbtn.move(50, 350)
-        layout.addWidget(self.qbtn)
+        #self.qbtn = QPushButton('Quit', self)
+        #self.qbtn.clicked.connect(QCoreApplication.instance().quit)
+        #self.qbtn.resize(self.qbtn.sizeHint())
+        #self.qbtn.move(50, 350)
+        #layout.addWidget(self.qbtn)
 
         self.statusBar().setStyleSheet("QStatusBar{padding-left:8px;background:rgb(11, 181, 255);color:white;font-weight:bold;}")
         self.statusBar()
