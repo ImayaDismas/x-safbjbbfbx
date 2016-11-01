@@ -12,7 +12,7 @@ class Ui_AddUser(object):
     def setupUi(self, AddUser):
         AddUser.setObjectName("AddUser")
         AddUser.resize(355, 497)
-        AddUser.move(600, 100)
+        AddUser.move(600, 400)
         self.centralWidget = QtWidgets.QWidget(AddUser)
         self.centralWidget.setObjectName("centralWidget")
         self.textEdit_3 = QtWidgets.QTextEdit(self.centralWidget)
@@ -55,7 +55,7 @@ class Ui_AddUser(object):
         self.pushButton_2.setGeometry(QtCore.QRect(90, 420, 80, 22))
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_3 = QtWidgets.QPushButton(self.groupBox)
-        self.pushButton_3.setGeometry(QtCore.QRect(140, 380, 91, 22))
+        self.pushButton_3.setGeometry(QtCore.QRect(140, 380, 111, 22))
         self.pushButton_3.setObjectName("pushButton_3")
         self.groupBox.raise_()
         self.textEdit_3.raise_()
@@ -70,16 +70,16 @@ class Ui_AddUser(object):
 
     def retranslateUi(self, AddUser):
         _translate = QtCore.QCoreApplication.translate
-        AddUser.setWindowTitle(_translate("AddUser", "Add User"))
+        AddUser.setWindowTitle(_translate("AddUser", "Edit Target"))
         self.label_4.setText(_translate("AddUser", "Name:"))
         self.label_5.setText(_translate("AddUser", "Group:"))
-        self.groupBox.setTitle(_translate("AddUser", "Add Target"))
+        self.groupBox.setTitle(_translate("AddUser", "Edit Target"))
         self.label_3.setText(_translate("AddUser", "Notes:"))
         self.label_2.setText(_translate("AddUser", "Network ID:"))
         self.label.setText(_translate("AddUser", "Bio:"))
-        self.pushButton.setText(_translate("AddUser", "Add"))
+        self.pushButton.setText(_translate("AddUser", "Save"))
         self.pushButton_2.setText(_translate("AddUser", "Cancel"))
-        self.pushButton_3.setText(_translate("AddUser", "+ Add Image"))
+        self.pushButton_3.setText(_translate("AddUser", "+ Change Image"))
 
 
 if __name__ == "__main__":

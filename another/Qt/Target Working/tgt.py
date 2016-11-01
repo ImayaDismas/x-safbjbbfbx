@@ -8,7 +8,7 @@
 from time import gmtime, strftime
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QStringListModel
-from PyQt5.QtWidgets import (QCompleter, QLabel, QDesktopWidget)
+from PyQt5.QtWidgets import (QCompleter, QPushButton, QLabel, QDesktopWidget)
 from PyQt5.QtWidgets import QDesktopWidget
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt
@@ -31,7 +31,8 @@ class Ui_Target(object):
         self.completer = QCompleter()
         self.completer.setModel(self.model)
 
-        Target.resize(1200, 510)
+        # Target.resize(1200, 510)
+        Target.showMaximized()
         self.centralWidget = QtWidgets.QWidget(Target)
         self.centralWidget.setObjectName("centralWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralWidget)
@@ -41,16 +42,22 @@ class Ui_Target(object):
 
         self.lineEdit = QtWidgets.QLineEdit(self.centralWidget)
         self.lineEdit.setObjectName("lineEdit")
-        self.lineEdit.setPlaceholderText("Search")
-        self.lineEdit.setCompleter(self.completer)
-        self.lineEdit.setEnabled(True)
 
-        self.gridLayout.addWidget(self.lineEdit, 0, 0, 1, 1)
+        # self.lineEdit = QtWidgets.QLineEdit(self.centralWidget)
+        # self.lineEdit.setObjectName("lineEdit")
+        self.lineEdit.setPlaceholderText("Search Target")
+        self.lineEdit.setCompleter(self.completer)
+        self.lineEdit.resize(250, 25)
+        self.lineEdit.move(100, 55)
+        # self.lineEdit.setEnabled(True)
+        # self.lineEdit.raise_()
+
+        # self.gridLayout.addWidget(self.lineEdit1, 0, 0, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(243, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 0, 1, 1, 1)
         self.pushButton = QtWidgets.QPushButton(self.centralWidget)
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked.connect(lambda:self.run('external.py'))
+        self.pushButton.clicked.connect(lambda:self.run('adduser.py'))
         self.gridLayout.addWidget(self.pushButton, 0, 2, 1, 1)
 
 
@@ -112,8 +119,10 @@ class Ui_Target(object):
 
         self.pushButton_5 = QtWidgets.QPushButton(self.centralWidget)
         self.pushButton_5.setObjectName("pushButton_5")
-        self.pushButton_5.clicked.connect(lambda:self.run('external.py'))
-        self.gridLayout.addWidget(self.pushButton_5, 5, 2, 1, 2)
+        self.pushButton_5.clicked.connect(lambda:self.run('operations.py'))
+        # self.gridLayout.addWidget(self.pushButton_5, 5, 2, 1, 2)
+        self.pushButton_5.resize(250, 25)
+        self.pushButton_5.move(540, 455)
 
         self.pushButton_4 = QtWidgets.QPushButton(self.centralWidget)
         self.pushButton_4.setObjectName("pushButton_4")
@@ -125,6 +134,8 @@ class Ui_Target(object):
         self.pushButton_6.setObjectName("pushButton_6")
         self.gridLayout.addWidget(self.pushButton_6, 6, 2, 1, 2)
         self.pushButton_6.clicked.connect(self.CallsButton)
+        # self.pushButton_6.resize(250, 25)
+        # self.pushButton_6.move(540, 455)
 
         self.listWidget_1 = QtWidgets.QListWidget(self.centralWidget)
         self.listWidget_1.setObjectName("listWidget_1")
@@ -139,6 +150,11 @@ class Ui_Target(object):
         self.pushButton_7.setObjectName("pushButton_7")
         self.gridLayout.addWidget(self.pushButton_7, 7, 2, 1, 2)
         self.pushButton_7.clicked.connect(self.SmsButton)
+
+        self.pushButton_8 = QtWidgets.QPushButton(self.centralWidget)
+        self.pushButton_8.setObjectName("pushButton_8")
+        self.pushButton_8.clicked.connect(lambda:self.run('edituser.py'))
+        self.pushButton_8.move(620, 405)
 
         Target.setCentralWidget(self.centralWidget)
         self.statusBar = QtWidgets.QStatusBar(Target)
@@ -197,13 +213,14 @@ class Ui_Target(object):
         self.pushButton.setText(_translate("Target", "ADD"))
         self.label.setText(_translate("Target", "Name"))
         self.label_2.setText(_translate("Target", "Group"))
-        self.label_3.setText(_translate("Target", "Target Number"))
+        self.label_3.setText(_translate("Target", "Target List"))
         self.pushButton_2.setText(_translate("Target", "Bio"))
         self.pushButton_3.setText(_translate("Target", "Network ID"))
         self.pushButton_5.setText(_translate("Target", "Operations"))
         self.pushButton_4.setText(_translate("Target", "Notes"))
         self.pushButton_6.setText(_translate("Target", "Calls"))
         self.pushButton_7.setText(_translate("Target", "Sms"))
+        self.pushButton_8.setText(_translate("Target", "Edit"))
         self.toolBar.setWindowTitle(_translate("Target", "toolBar"))
         self.toolBar_2.setWindowTitle(_translate("Target", "toolBar_2"))
 

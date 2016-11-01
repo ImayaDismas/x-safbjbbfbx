@@ -12,7 +12,7 @@ class Ui_AddUser(object):
     def setupUi(self, AddUser):
         AddUser.setObjectName("AddUser")
         AddUser.resize(355, 497)
-        AddUser.move(600, 100)
+        AddUser.move(490, 100)
         self.centralWidget = QtWidgets.QWidget(AddUser)
         self.centralWidget.setObjectName("centralWidget")
         self.textEdit_3 = QtWidgets.QTextEdit(self.centralWidget)
@@ -70,7 +70,7 @@ class Ui_AddUser(object):
 
     def retranslateUi(self, AddUser):
         _translate = QtCore.QCoreApplication.translate
-        AddUser.setWindowTitle(_translate("AddUser", "Add User"))
+        AddUser.setWindowTitle(_translate("AddUser", "Add Target"))
         self.label_4.setText(_translate("AddUser", "Name:"))
         self.label_5.setText(_translate("AddUser", "Group:"))
         self.groupBox.setTitle(_translate("AddUser", "Add Target"))

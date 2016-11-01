@@ -35,7 +35,7 @@ class Example(QWidget):
         lbl3 = QLabel('for programmers', self)
         lbl3.move(55, 70)
 
-        self.setGeometry(300, 300, 250, 150)
+        self.setGeometry(900, 300, 250, 150)
         self.setWindowTitle('Absolute')
         self.show()
 
