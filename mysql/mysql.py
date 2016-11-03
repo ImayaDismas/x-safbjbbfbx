@@ -1,22 +1,17 @@
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
-from PyQt5.QtWidgets import QTableView, QApplication
-import sys
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
-app = QApplication(sys.argv)
+import MySQLdb
 
-db = QSqlDatabase.addDatabase("QMYSQL", "my_sql_db")
-db.setHostName("localhost")
-db.setDatabaseName("usrdb")
-db.setUserName("usr")
-db.setPassword("passwrd")
-db.open()
+conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="test")
+cur = conn.cursor()
 
-testModel = QSqlTableModel()
-testModel.setTable("test")
-testModel.setEditStrategy(QSqlTableModel.OnFieldChange)
-testModel.select()
+cur.execute("SELECT * FROM test_data")
+row = cur.fetchone()
+while row is not None:
+    print (row[0],row[1],row[2])
+    row = cur.fetchone()
 
-testView = QTableView()
-testView.setModel(testModel)
-
-app.exec_()
+cur.close()
+conn.close()
+sys.exit(1)
