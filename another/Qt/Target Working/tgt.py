@@ -13,6 +13,15 @@ from PyQt5.QtWidgets import QDesktopWidget
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt
 import subprocess
+import MySQLdb
+from PIL.ImageQt import ImageQt
+from PIL import Image
+import requests
+import io
+from io import StringIO
+
+
+
 
 
 class Ui_Target(object):
@@ -21,9 +30,17 @@ class Ui_Target(object):
         Target.setWindowIcon(QIcon('web.png'))
 
         self.model = QStringListModel()
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM table_target")
+        row = cur.fetchone()
         my_target = []
-        for i in range(1,61):
-            my_target.append("Target %i" % i)
+        while row is not None:
+            my_target.append("Target %i" % row[0])
+            row = cur.fetchone()
+        cur.close()
+        conn.close()
         #     item = QtWidgets.QListWidgetItem("Target %i" % i)
         #     self.listWidget.addItem(item)
         self.model.setStringList(my_target)
@@ -70,11 +87,18 @@ class Ui_Target(object):
 
         self.listWidget = QtWidgets.QListWidget(self.centralWidget)
         self.listWidget.setObjectName("listWidget")
-        for i in range(1,61):
-            item = QtWidgets.QListWidgetItem("Target %i" % i)
+        for i in my_target:
+            # item = QtWidgets.QListWidgetItem("Target %i" % i)
             # item.setTextAlignment(Qt.AlignHCenter)
-            self.listWidget.addItem(item)
+            self.listWidget.addItem(i)
 
+        # self.currentItemChanged.connect(print_info)
+
+        self.listWidget.currentItemChanged.connect(self.print_info)
+        self.listWidget.currentItemChanged.connect(self.NetworkIdButton)
+        self.listWidget.currentItemChanged.connect(self.NotesButton)
+        self.listWidget.currentItemChanged.connect(self.BioButton)
+        # self.listWidget.currentItemChanged.connect(self.load_image)
 
         self.gridLayout.addWidget(self.listWidget, 1, 0, 7, 2)
         self.graphicsView = QtWidgets.QGraphicsView(self.centralWidget)
@@ -91,12 +115,15 @@ class Ui_Target(object):
         self.gridLayout.addWidget(self.label, 1, 4, 1, 1)
         self.lineEdit_2 = QtWidgets.QLineEdit(self.centralWidget)
         self.lineEdit_2.setObjectName("lineEdit_2")
+        self.lineEdit_2.setEnabled(False)
         self.gridLayout.addWidget(self.lineEdit_2, 1, 5, 1, 1)
+
         self.label_2 = QtWidgets.QLabel(self.centralWidget)
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 2, 4, 1, 1)
         self.lineEdit_3 = QtWidgets.QLineEdit(self.centralWidget)
         self.lineEdit_3.setObjectName("lineEdit_3")
+        self.lineEdit_3.setEnabled(False)
         self.gridLayout.addWidget(self.lineEdit_3, 2, 5, 1, 1)
 
         self.pushButton_2 = QtWidgets.QPushButton(self.centralWidget)
@@ -178,14 +205,96 @@ class Ui_Target(object):
         QtCore.QMetaObject.connectSlotsByName(Target)
 
 
+
+
+    def print_info(self):
+        curr = self.listWidget.currentItem().text()
+        # print (curr)
+        curre = curr.split(' ')
+        # print(curre[1])
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        curs = conn.cursor()
+
+        curs.execute("SELECT * FROM table_target where id = %i" %int(curre[1]))
+        row = curs.fetchone()
+        while row is not None:
+            # print (row[0],row[1],row[2],row[3],row[4])
+            self.lineEdit_2.setText(row[1])
+            self.lineEdit_3.setText(row[2])
+            row = curs.fetchone()
+        curs.close()
+        conn.close()
+
+
     def BioButton(self):
-        self.textBrowser.setText('My name is Cecil Lewis, and I am a survivor.  For weeks I daydreamed of my family’s vacation to Thailand.  That vacation was a much needed time away from my hectic hours as a lawyer in a medium-sized firm in Chicago.  But as it turned out my time there was not relaxing at all, life had a different plan.  While on that vacation, our hotel received word of a devastating tsunami set to hit land, we were to evacuate quickly.  Lucky for my family we were further uphill hiking that day when we heard the news. We left to find an even safer location just before the water came on shore. We survived the tsunami. It was an act of God. When we returned many days later we found our resort was no more.')
+        curr = self.listWidget.currentItem().text()
+
+        curre = curr.split(' ')
+
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        curs = conn.cursor()
+
+        curs.execute("SELECT * FROM table_target where id = %i" %int(curre[1]))
+        row = curs.fetchone()
+        while row is not None:
+            self.textBrowser.setText(row[3])
+            row = curs.fetchone()
+        curs.close()
+        conn.close()
 
     def NetworkIdButton(self):
-        self.textBrowser.setText('192.168.255.255')
+        curr = self.listWidget.currentItem().text()
+
+        curre = curr.split(' ')
+
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        curs = conn.cursor()
+
+        curs.execute("SELECT * FROM table_target where id = %i" %int(curre[1]))
+        row = curs.fetchone()
+        while row is not None:
+            self.textBrowser.setText(row[4])
+            row = curs.fetchone()
+        curs.close()
+        conn.close()
+
 
     def NotesButton(self):
-        self.textBrowser.setText('Think about ways you can tell your story in a unique, unexpected way to really draw the readers in. It\'s amazing what impression you can make on site visitors just by getting creative with the copy')
+        curr = self.listWidget.currentItem().text()
+        curre = curr.split(' ')
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        curs = conn.cursor()
+
+        curs.execute("SELECT * FROM table_target where id = %i" %int(curre[1]))
+        row = curs.fetchone()
+        while row is not None:
+            self.textBrowser.setText(row[5])
+            row = curs.fetchone()
+        curs.close()
+        conn.close()
+
+    def load_image(self):
+
+        self.scene.clear()
+        curr = self.listWidget.currentItem().text()
+        curre = curr.split(' ')
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        curs = conn.cursor()
+
+        curs.execute("SELECT * FROM table_target where id = %i" %int(curre[1]))
+        row = curs.fetchone()
+        while row is not None:
+            url = row[6]
+            response = requests.get(url)
+            # img = Image.open(io.BytesIO(response.content))
+            qimage = ImageQt(response.content)
+            # qimage = ImageQt(img)
+            pixmap = QtGui.QPixmap.fromImage(qimage)
+            self.scene.addPixmap(QPixmap(pixmap))
+            row = curs.fetchone()
+        curs.close()
+        conn.close()
+
 
     def CallsButton(self):
         self.listWidget_1.clear()
@@ -223,7 +332,6 @@ class Ui_Target(object):
         self.pushButton_8.setText(_translate("Target", "Edit"))
         self.toolBar.setWindowTitle(_translate("Target", "toolBar"))
         self.toolBar_2.setWindowTitle(_translate("Target", "toolBar_2"))
-
 
 if __name__ == "__main__":
     import sys
