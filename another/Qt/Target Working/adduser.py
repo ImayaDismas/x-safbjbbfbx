@@ -7,6 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import subprocess
+from PyQt5.QtCore import QCoreApplication
 
 class Ui_AddUser(object):
     def setupUi(self, AddUser):
@@ -53,9 +55,11 @@ class Ui_AddUser(object):
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(self.groupBox)
         self.pushButton_2.setGeometry(QtCore.QRect(90, 420, 80, 22))
+        self.pushButton_2.clicked.connect(QCoreApplication.instance().quit)
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_3 = QtWidgets.QPushButton(self.groupBox)
         self.pushButton_3.setGeometry(QtCore.QRect(140, 380, 91, 22))
+        self.pushButton_3.clicked.connect(lambda:self.run('image.py'))
         self.pushButton_3.setObjectName("pushButton_3")
         self.groupBox.raise_()
         self.textEdit_3.raise_()
@@ -80,6 +84,9 @@ class Ui_AddUser(object):
         self.pushButton.setText(_translate("AddUser", "Add"))
         self.pushButton_2.setText(_translate("AddUser", "Cancel"))
         self.pushButton_3.setText(_translate("AddUser", "+ Add Image"))
+
+    def run(self, path):
+        subprocess.call(['python3',path])
 
 
 if __name__ == "__main__":
