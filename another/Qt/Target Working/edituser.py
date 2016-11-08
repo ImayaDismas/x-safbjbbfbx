@@ -81,7 +81,7 @@ class Ui_AddUser(object):
         self.label_3.setText(_translate("AddUser", "Notes:"))
         self.label_2.setText(_translate("AddUser", "Net_ID:"))
         self.label.setText(_translate("AddUser", "Bio:"))
-        self.pushButton.setText(_translate("AddUser", "Save"))
+        self.pushButton.setText(_translate("AddUser", "Update"))
         self.pushButton_2.setText(_translate("AddUser", "Cancel"))
         self.pushButton_3.setText(_translate("AddUser", "+ Change Image"))
 

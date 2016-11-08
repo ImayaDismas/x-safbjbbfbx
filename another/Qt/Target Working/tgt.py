@@ -66,6 +66,8 @@ class Ui_Target(object):
         self.lineEdit.setCompleter(self.completer)
         self.lineEdit.resize(250, 25)
         self.lineEdit.move(100, 55)
+        self.lineEdit.textChanged.connect(self.sync_listWidget)
+        # self.lineEdit.textChanged.connect(self.NetworkIdButtonSearch)
         # self.lineEdit.setEnabled(True)
         # self.lineEdit.raise_()
 
@@ -129,6 +131,7 @@ class Ui_Target(object):
         self.pushButton_2 = QtWidgets.QPushButton(self.centralWidget)
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_2.clicked.connect(self.BioButton)
+        self.pushButton_2.clicked.connect(self.BioButtonSearch)
         self.gridLayout.addWidget(self.pushButton_2, 3, 4, 1, 1)
 
 
@@ -142,7 +145,7 @@ class Ui_Target(object):
         self.pushButton_3.setObjectName("pushButton_3")
         self.gridLayout.addWidget(self.pushButton_3, 4, 4, 1, 1)
         self.pushButton_3.clicked.connect(self.NetworkIdButton)
-
+        self.pushButton_3.clicked.connect(self.NetworkIdButtonSearch)
 
         self.pushButton_5 = QtWidgets.QPushButton(self.centralWidget)
         self.pushButton_5.setObjectName("pushButton_5")
@@ -155,6 +158,7 @@ class Ui_Target(object):
         self.pushButton_4.setObjectName("pushButton_4")
         self.gridLayout.addWidget(self.pushButton_4, 5, 4, 1, 1)
         self.pushButton_4.clicked.connect(self.NotesButton)
+        self.pushButton_4.clicked.connect(self.NotesButtonSearch)
 
 
         self.pushButton_6 = QtWidgets.QPushButton(self.centralWidget)
@@ -293,6 +297,92 @@ class Ui_Target(object):
             self.scene.addPixmap(QPixmap(pixmap))
             row = curs.fetchone()
         curs.close()
+        conn.close()
+
+
+    def sync_listWidget(self, text):
+        # txt = self.lineEdit.Text()
+        # print(txt)
+
+        target_id = text.split(' ')
+        # print(target_id[1])
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        cur1 = conn.cursor()
+
+        cur1.execute("SELECT * FROM table_target where id = %i" %int(target_id[1]))
+        row = cur1.fetchone()
+        while row is not None:
+            # print (row[0],row[1],row[2],row[3],row[4])
+            self.lineEdit_2.setText(row[1])
+            self.lineEdit_3.setText(row[2])
+            row = cur1.fetchone()
+        cur1.close()
+
+        cur2 = conn.cursor()
+        cur2.execute("SELECT * FROM table_target where id = %i" %int(target_id[1]))
+        row = cur2.fetchone()
+        while row is not None:
+            self.textBrowser.setText(row[3])
+            row = cur2.fetchone()
+        cur2.close()
+
+        conn.close()
+
+
+
+    def BioButtonSearch(self):
+
+        text = self.lineEdit.text()
+        print(text)
+
+        target_id = text.split(' ')
+        # print(target_id[1])
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+
+        cur2 = conn.cursor()
+        cur2.execute("SELECT * FROM table_target where id = %i" %int(target_id[1]))
+        row = cur2.fetchone()
+        while row is not None:
+            self.textBrowser.setText(row[3])
+            row = cur2.fetchone()
+        cur2.close()
+        conn.close()
+
+    def NetworkIdButtonSearch(self):
+        # print(text)
+        text = self.lineEdit.text()
+        print(text)
+
+        target_id = text.split(' ')
+        # print(target_id[1])
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+
+        cur3 = conn.cursor()
+        cur3.execute("SELECT * FROM table_target where id = %i" %int(target_id[1]))
+        row = cur3.fetchone()
+        while row is not None:
+            self.textBrowser.setText(row[4])
+            row = cur3.fetchone()
+        cur3.close()
+        conn.close()
+
+    def NotesButtonSearch(self):
+        # print(text)
+        text = self.lineEdit.text()
+        print(text)
+
+        target_id = text.split(' ')
+        # print(target_id[1])
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+
+        cur4 = conn.cursor()
+        cur4.execute("SELECT * FROM table_target where id = %i" %int(target_id[1]))
+        row = cur4.fetchone()
+        while row is not None:
+            self.textBrowser.setText(row[5])
+            row = cur4.fetchone()
+        cur4.close()
+
         conn.close()
 
 
