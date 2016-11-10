@@ -20,20 +20,16 @@ import requests
 import io
 from io import StringIO
 
-
-
-
-
 class Ui_Target(object):
     def TargetUi(self, Target):
         Target.setObjectName("Target")
         Target.setWindowIcon(QIcon('web.png'))
 
         self.model = QStringListModel()
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         cur = conn.cursor()
 
-        cur.execute("SELECT * FROM table_target")
+        cur.execute("SELECT * FROM users")
         row = cur.fetchone()
         my_target = []
         while row is not None:
@@ -185,7 +181,12 @@ class Ui_Target(object):
         self.pushButton_8 = QtWidgets.QPushButton(self.centralWidget)
         self.pushButton_8.setObjectName("pushButton_8")
         self.pushButton_8.clicked.connect(lambda:self.run('edituser.py'))
-        self.pushButton_8.move(620, 405)
+        self.pushButton_8.move(500, 405)
+
+        self.pushButton_9 = QtWidgets.QPushButton(self.centralWidget)
+        self.pushButton_9.setObjectName("pushButton_9")
+        self.pushButton_9.clicked.connect(lambda:self.run('areyousure.py'))
+        self.pushButton_9.move(720, 405)
 
         Target.setCentralWidget(self.centralWidget)
         self.statusBar = QtWidgets.QStatusBar(Target)
@@ -210,16 +211,16 @@ class Ui_Target(object):
 
 
 
-
     def print_info(self):
         curr = self.listWidget.currentItem().text()
         # print (curr)
         curre = curr.split(' ')
-        # print(curre[1])
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        txt = curre[1]
+        # print(txt)
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
-        curs.execute("SELECT * FROM table_target where id = %i" %int(curre[1]))
+        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
         row = curs.fetchone()
         while row is not None:
             # print (row[0],row[1],row[2],row[3],row[4])
@@ -235,10 +236,10 @@ class Ui_Target(object):
 
         curre = curr.split(' ')
 
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
-        curs.execute("SELECT * FROM table_target where id = %i" %int(curre[1]))
+        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
         row = curs.fetchone()
         while row is not None:
             self.textBrowser.setText(row[3])
@@ -251,10 +252,10 @@ class Ui_Target(object):
 
         curre = curr.split(' ')
 
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
-        curs.execute("SELECT * FROM table_target where id = %i" %int(curre[1]))
+        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
         row = curs.fetchone()
         while row is not None:
             self.textBrowser.setText(row[4])
@@ -266,10 +267,10 @@ class Ui_Target(object):
     def NotesButton(self):
         curr = self.listWidget.currentItem().text()
         curre = curr.split(' ')
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
-        curs.execute("SELECT * FROM table_target where id = %i" %int(curre[1]))
+        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
         row = curs.fetchone()
         while row is not None:
             self.textBrowser.setText(row[5])
@@ -282,10 +283,10 @@ class Ui_Target(object):
         self.scene.clear()
         curr = self.listWidget.currentItem().text()
         curre = curr.split(' ')
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
-        curs.execute("SELECT * FROM table_target where id = %i" %int(curre[1]))
+        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
         row = curs.fetchone()
         while row is not None:
             url = row[6]
@@ -306,10 +307,10 @@ class Ui_Target(object):
 
         target_id = text.split(' ')
         # print(target_id[1])
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         cur1 = conn.cursor()
 
-        cur1.execute("SELECT * FROM table_target where id = %i" %int(target_id[1]))
+        cur1.execute("SELECT * FROM users where id = %i" %int(target_id[1]))
         row = cur1.fetchone()
         while row is not None:
             # print (row[0],row[1],row[2],row[3],row[4])
@@ -319,7 +320,7 @@ class Ui_Target(object):
         cur1.close()
 
         cur2 = conn.cursor()
-        cur2.execute("SELECT * FROM table_target where id = %i" %int(target_id[1]))
+        cur2.execute("SELECT * FROM users where id = %i" %int(target_id[1]))
         row = cur2.fetchone()
         while row is not None:
             self.textBrowser.setText(row[3])
@@ -337,10 +338,10 @@ class Ui_Target(object):
 
         target_id = text.split(' ')
         # print(target_id[1])
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
 
         cur2 = conn.cursor()
-        cur2.execute("SELECT * FROM table_target where id = %i" %int(target_id[1]))
+        cur2.execute("SELECT * FROM users where id = %i" %int(target_id[1]))
         row = cur2.fetchone()
         while row is not None:
             self.textBrowser.setText(row[3])
@@ -355,10 +356,10 @@ class Ui_Target(object):
 
         target_id = text.split(' ')
         # print(target_id[1])
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
 
         cur3 = conn.cursor()
-        cur3.execute("SELECT * FROM table_target where id = %i" %int(target_id[1]))
+        cur3.execute("SELECT * FROM users where id = %i" %int(target_id[1]))
         row = cur3.fetchone()
         while row is not None:
             self.textBrowser.setText(row[4])
@@ -373,10 +374,10 @@ class Ui_Target(object):
 
         target_id = text.split(' ')
         # print(target_id[1])
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="target")
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
 
         cur4 = conn.cursor()
-        cur4.execute("SELECT * FROM table_target where id = %i" %int(target_id[1]))
+        cur4.execute("SELECT * FROM users where id = %i" %int(target_id[1]))
         row = cur4.fetchone()
         while row is not None:
             self.textBrowser.setText(row[5])
@@ -420,6 +421,7 @@ class Ui_Target(object):
         self.pushButton_6.setText(_translate("Target", "Calls"))
         self.pushButton_7.setText(_translate("Target", "Sms"))
         self.pushButton_8.setText(_translate("Target", "Edit"))
+        self.pushButton_9.setText(_translate("Target", "Delete"))
         self.toolBar.setWindowTitle(_translate("Target", "toolBar"))
         self.toolBar_2.setWindowTitle(_translate("Target", "toolBar_2"))
 

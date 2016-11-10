@@ -67,6 +67,8 @@ class Ui_AddUser(object):
         self.pushButton.setGeometry(QtCore.QRect(210, 420, 80, 22))
         self.pushButton.setObjectName("pushButton")
         self.pushButton.clicked.connect(self.SaveButton)
+        self.pushButton.clicked.connect(QCoreApplication.instance().quit)
+        self.pushButton.clicked.connect(lambda:self.run('save_success.py'))
         self.pushButton_2 = QtWidgets.QPushButton(self.groupBox)
         self.pushButton_2.setGeometry(QtCore.QRect(90, 420, 80, 22))
         self.pushButton_2.clicked.connect(QCoreApplication.instance().quit)
@@ -104,15 +106,15 @@ class Ui_AddUser(object):
 
     def SaveButton(self):
         target_name = self.lineEdit_2.text()
-        print(target_name)
+        # print(target_name)
         target_group = self.lineEdit.text()
-        print(target_group)
+        # print(target_group)
         bio = self.textEdit_3.toPlainText()
-        print(bio)
+        # print(bio)
         network_id = self.textEdit.toPlainText()
-        print(network_id)
+        # print(network_id)
         notes = self.textEdit_2.toPlainText()
-        print(notes)
+        # print(notes)
 
         target_status = 1
 
@@ -124,7 +126,9 @@ class Ui_AddUser(object):
         # args = (target_name, target_group, bio, network_id, notes, target_status)
         #
         # curs.execute(query, args)
+        conn.commit()
         curs.close()
+
         conn.close()
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import subprocess
 from PyQt5.QtCore import QCoreApplication
+import MySQLdb
 
 class Ui_AddUser(object):
     def setupUi(self, AddUser):
@@ -53,6 +54,9 @@ class Ui_AddUser(object):
         self.pushButton = QtWidgets.QPushButton(self.groupBox)
         self.pushButton.setGeometry(QtCore.QRect(210, 420, 80, 22))
         self.pushButton.setObjectName("pushButton")
+        self.pushButton.clicked.connect(self.UpdateButton)
+        self.pushButton.clicked.connect(QCoreApplication.instance().quit)
+        self.pushButton.clicked.connect(lambda:self.run('update_success.py'))
         self.pushButton_2 = QtWidgets.QPushButton(self.groupBox)
         self.pushButton_2.setGeometry(QtCore.QRect(90, 420, 80, 22))
         self.pushButton_2.clicked.connect(QCoreApplication.instance().quit)
@@ -68,6 +72,8 @@ class Ui_AddUser(object):
         self.label_4.raise_()
         self.label_5.raise_()
         AddUser.setCentralWidget(self.centralWidget)
+
+        self.fetch_info()
 
         self.retranslateUi(AddUser)
         QtCore.QMetaObject.connectSlotsByName(AddUser)
@@ -87,6 +93,63 @@ class Ui_AddUser(object):
 
     def run(self, path):
         subprocess.call(['python3',path])
+
+
+    def fetch_info(self):
+        # curr = self.listWidget.currentItem().text()
+        curr = 'Target 2'
+        # print (curr)
+        curre = curr.split(' ')
+
+        # print(curre[1])
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        curs = conn.cursor()
+
+        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
+        # curs.execute("SELECT * FROM users")
+        row = curs.fetchone()
+        while row is not None:
+            # print (row[0],row[1],row[2],row[3],row[4])
+            self.lineEdit_2.setText(row[1])
+            self.lineEdit.setText(row[2])
+            self.textEdit_3.setText(row[3])
+            self.textEdit.setText(row[4])
+            self.textEdit_2.setText(row[5])
+            row = curs.fetchone()
+        curs.close()
+        conn.close()
+
+    def UpdateButton(self):
+        # curr = self.listWidget.currentItem().text()
+        curr = 'Target 2'
+        # print (curr)
+        curre = curr.split(' ')
+
+        target_name = self.lineEdit_2.text()
+        # print(target_name)
+        target_group = self.lineEdit.text()
+        # print(target_group)
+        bio = self.textEdit_3.toPlainText()
+        # print(bio)
+        network_id = self.textEdit.toPlainText()
+        # print(network_id)
+        notes = self.textEdit_2.toPlainText()
+        # print(notes)
+
+        target_status = 1
+
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        curs = conn.cursor()
+
+        query = "UPDATE users SET target_name = %s, target_group = %s, bio = %s, network_id = %s, notes = %s, target_status = %s WHERE id = %s"
+
+        args = (target_name, target_group, bio, network_id, notes, target_status,  curre[1])
+
+        curs.execute(query, args)
+        conn.commit()
+        curs.close()
+
+        conn.close()
 
 
 if __name__ == "__main__":
