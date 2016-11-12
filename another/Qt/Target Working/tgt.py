@@ -18,9 +18,12 @@ from PIL.ImageQt import ImageQt
 from PIL import Image
 import requests
 import io
+import os
 from io import StringIO
 
+
 class Ui_Target(object):
+    tgt = 10
     def TargetUi(self, Target):
         Target.setObjectName("Target")
         Target.setWindowIcon(QIcon('web.png'))
@@ -97,6 +100,12 @@ class Ui_Target(object):
         self.listWidget.currentItemChanged.connect(self.NotesButton)
         self.listWidget.currentItemChanged.connect(self.BioButton)
         # self.listWidget.currentItemChanged.connect(self.load_image)
+
+        # x = self.print_info.target_txt
+        # print(x)
+        self.line = QtWidgets.QLineEdit(self.centralWidget)
+        words = self.line.text()
+        print(words)
 
         self.gridLayout.addWidget(self.listWidget, 1, 0, 7, 2)
         self.graphicsView = QtWidgets.QGraphicsView(self.centralWidget)
@@ -206,29 +215,36 @@ class Ui_Target(object):
         self.toolBar_2.setObjectName("toolBar_2")
         Target.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar_2)
 
+
+
         self.retranslateUi(Target)
         QtCore.QMetaObject.connectSlotsByName(Target)
 
-
-
+    target_txt = 0
     def print_info(self):
         curr = self.listWidget.currentItem().text()
         # print (curr)
         curre = curr.split(' ')
-        txt = curre[1]
-        # print(txt)
+
+        target_txt = str(curre[1])
+
+        # print(target_txt)
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
         curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
         row = curs.fetchone()
         while row is not None:
-            # print (row[0],row[1],row[2],row[3],row[4])
+            self.line.setText(target_txt)
             self.lineEdit_2.setText(row[1])
             self.lineEdit_3.setText(row[2])
             row = curs.fetchone()
         curs.close()
         conn.close()
+    # print_info().global_work()
+    # print(target_txt)
+
+
 
 
     def BioButton(self):
@@ -425,11 +441,15 @@ class Ui_Target(object):
         self.toolBar.setWindowTitle(_translate("Target", "toolBar"))
         self.toolBar_2.setWindowTitle(_translate("Target", "toolBar_2"))
 
+    # value_choice(self)
+
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Target = QtWidgets.QMainWindow()
     ui = Ui_Target()
     ui.TargetUi(Target)
+    # ui.value_choice(Target)
     Target.show()
     sys.exit(app.exec_())

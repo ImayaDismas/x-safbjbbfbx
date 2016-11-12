@@ -9,4 +9,5 @@ class Testgui:
         
 
     print(Testg.y)
+    print(Testg.passVars().name)
     passVar()

@@ -10,12 +10,22 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import subprocess
 from PyQt5.QtCore import QCoreApplication
 import MySQLdb
+from tgt import Ui_Target
+# from tgt import target
 
 class Ui_AddUser(object):
+
     def setupUi(self, AddUser):
         AddUser.setObjectName("AddUser")
         AddUser.resize(355, 497)
         AddUser.move(490, 100)
+
+        print(Ui_Target.tgt)
+
+        # x = Ui_Target.print_value(target_txt)
+        # print("Got this " + str(x))
+        # print(Ui_Target.target_txt)
+
         self.centralWidget = QtWidgets.QWidget(AddUser)
         self.centralWidget.setObjectName("centralWidget")
         self.textEdit_3 = QtWidgets.QTextEdit(self.centralWidget)
