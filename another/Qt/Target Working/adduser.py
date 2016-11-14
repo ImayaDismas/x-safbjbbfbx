@@ -112,14 +112,17 @@ class Ui_AddUser(object):
     def run(self, path):
         subprocess.call(['python3',path])
 
-    def read_file(filename):
-        with open(filename, 'rb') as f:
-            photo = f.read()
-        return photo
+
 
     def SaveButton(self):
         config.read('imageurl.txt')
         imageUrl = config.get('image_url', 'url')
+
+        def read_file(filename):
+            with open(filename, 'rb') as f:
+                photo = f.read()
+            return photo
+
         data = read_file(imageUrl)
 
         target_name = self.lineEdit_2.text()
@@ -138,7 +141,16 @@ class Ui_AddUser(object):
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
-        curs.execute("INSERT INTO  users(target_name, target_group, bio, network_id, notes, images, target_status) VALUES(%s, %s, %s, %s, %s, %s)", (target_name, target_group, bio, network_id, notes, data, target_status))
+        curs.execute("INSERT INTO  users(target_name, target_group, bio, network_id, notes, target_status) VALUES(%s, %s, %s, %s, %s, %s)", (target_name, target_group, bio, network_id, notes, target_status))
+        conn.commit()
+        # print (curs.lastrowid)
+        # prepare update query and data
+        query = "UPDATE users " \
+                "SET images = %s " \
+                "WHERE id  = %s"
+
+        args = (data, curs.lastrowid)
+        curs.execute(query, args)
 
         conn.commit()
         curs.close()

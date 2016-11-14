@@ -33,14 +33,15 @@ class Ui_Target(object):
         Target.setWindowIcon(QIcon('web.png'))
 
         self.model = QStringListModel()
-        conn = MySQLdb.connect(user="root", passwd="nyagaka2013", db="data_target")
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         cur = conn.cursor()
 
-        cur.execute("SELECT * FROM users")
+        status = 1
+        cur.execute("SELECT * FROM users where target_status = %i" %status)
         row = cur.fetchone()
         my_target = []
         while row is not None:
-            my_target.append("Target %i" % row[0])
+            my_target.append("Target %i" % row[0] + " %s" %row[1])
             row = cur.fetchone()
         cur.close()
         conn.close()
@@ -70,6 +71,7 @@ class Ui_Target(object):
         self.lineEdit.resize(250, 25)
         self.lineEdit.move(100, 55)
         self.lineEdit.textChanged.connect(self.sync_listWidget)
+        self.lineEdit.textChanged.connect(self.load_image_search)
         # self.lineEdit.textChanged.connect(self.NetworkIdButtonSearch)
         # self.lineEdit.setEnabled(True)
         # self.lineEdit.raise_()
@@ -117,6 +119,7 @@ class Ui_Target(object):
 
 
         self.scene =QtWidgets.QGraphicsScene()
+        self.scene.setSceneRect(0,0,0,0)
         self.scene.addPixmap(QPixmap('web.png'))
         self.graphicsView.setScene(self.scene)
 
@@ -305,22 +308,30 @@ class Ui_Target(object):
         curs.close()
         conn.close()
 
-    def write_file(data, filename):
-        with open(filename, 'wb') as f:
-            f.write(data)
 
-    def read_blob(target_id, filename):
-        # select photo column of a specific author
-        query = "SELECT images FROM users where id = %i" %int(target_id)"
+
+    def load_image(self):
+
+        self.scene.clear()
+        curr = self.listWidget.currentItem().text()
+        curre = curr.split(' ')
+
+        filename = "/home/imaya/Documents/Projects/x-safbjbbfbx/another/Qt/Target Working/images/*"
+
+        query = ("SELECT images FROM users where id = %i" %int(curre[1]))
 
         try:
-            # query blob data form the authors table
+            # query blob data form the users table
             conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
             cursor = conn.cursor()
             cursor.execute(query,)
             photo = cursor.fetchone()[0]
 
             # write blob data into a file
+            def write_file(data, filename):
+                with open(filename, 'wb') as f:
+                    f.write(data)
+
             write_file(photo, filename)
 
         except (MySQLdb.Error, MySQLdb.Warning) as e:
@@ -330,13 +341,7 @@ class Ui_Target(object):
             cursor.close()
             conn.close()
 
-    def load_image(self):
-
-        self.scene.clear()
-        curr = self.listWidget.currentItem().text()
-        curre = curr.split(' ')
-        read_blob(curre[1],"/home/imaya/Documents/Projects/x-safbjbbfbx/another/Qt/Target Working/images/target.png")
-        self.scene.addPixmap(QPixmap('images/target.png'))
+        self.scene.addPixmap(QPixmap('images/*'))
         # conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         # curs = conn.cursor()
         #
@@ -353,6 +358,38 @@ class Ui_Target(object):
         #     row = curs.fetchone()
         # curs.close()
         # conn.close()
+
+    def load_image_search(self, text):
+
+        self.scene.clear()
+        curre = text.split(' ')
+
+        filename = "/home/imaya/Documents/Projects/x-safbjbbfbx/another/Qt/Target Working/images/*"
+
+        query = ("SELECT images FROM users where id = %i" %int(curre[1]))
+
+        try:
+            # query blob data form the users table
+            conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+            cursor = conn.cursor()
+            cursor.execute(query,)
+            photo = cursor.fetchone()[0]
+
+            # write blob data into a file
+            def write_file(data, filename):
+                with open(filename, 'wb') as f:
+                    f.write(data)
+
+            write_file(photo, filename)
+
+        except (MySQLdb.Error, MySQLdb.Warning) as e:
+            print(e)
+
+        finally:
+            cursor.close()
+            conn.close()
+
+        self.scene.addPixmap(QPixmap('images/*'))
 
 
     def sync_listWidget(self, text):

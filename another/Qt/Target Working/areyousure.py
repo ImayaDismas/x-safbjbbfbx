@@ -7,8 +7,9 @@ import subprocess
 from PyQt5.QtWidgets import (QWidget, QDesktopWidget, QPushButton,
     QHBoxLayout, QVBoxLayout, QLabel, QApplication)
 import MySQLdb
+import configparser
 
-
+config = configparser.RawConfigParser()
 class Example(QWidget):
 
     def __init__(self):
@@ -39,21 +40,10 @@ class Example(QWidget):
 
 
     def DeleteButton(self):
-        # curr = self.listWidget.currentItem().text()
-        curr = 'Target 2'
-        # print (curr)
-        curre = curr.split(' ')
+        config.read('target.txt')
+        curr = config.get('Target', 'id')
 
-        # target_name = self.lineEdit_2.text()
-        # print(target_name)
-        # target_group = self.lineEdit.text()
-        # print(target_group)
-        # bio = self.textEdit_3.toPlainText()
-        # print(bio)
-        # network_id = self.textEdit.toPlainText()
-        # print(network_id)
-        # notes = self.textEdit_2.toPlainText()
-        # print(notes)
+        curre = curr.split(' ')
 
         target_status = 0
 

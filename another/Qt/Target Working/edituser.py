@@ -123,20 +123,21 @@ class Ui_AddUser(object):
         curs.close()
         conn.close()
 
-    def read_file(filename):
-        with open(filename, 'rb') as f:
-            photo = f.read()
-        return photo
-
     def UpdateButton(self):
-        # curr = self.listWidget.currentItem().text()
+
         config.read('target.txt')
         curr = config.get('Target', 'id')
-        # print (curr)
+
         curre = curr.split(' ')
 
         config.read('imageurl.txt')
         imageUrl = config.get('image_url', 'url')
+
+        def read_file(filename):
+            with open(filename, 'rb') as f:
+                photo = f.read()
+            return photo
+
         data = read_file(imageUrl)
 
         target_name = self.lineEdit_2.text()
@@ -155,11 +156,21 @@ class Ui_AddUser(object):
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
-        query = "UPDATE users SET target_name = %s, target_group = %s, bio = %s, network_id = %s, notes = %s, images = %s, target_status = %s WHERE id = %s"
+        query = "UPDATE users SET target_name = %s, target_group = %s, bio = %s, network_id = %s, notes = %s, target_status = %s WHERE id = %s"
 
-        args = (target_name, target_group, bio, network_id, notes, data, target_status,  curre[1])
+        args = (target_name, target_group, bio, network_id, notes, target_status,  curre[1])
 
         curs.execute(query, args)
+
+        # prepare update query and data
+        qry = "UPDATE users " \
+                "SET images = %s " \
+                "WHERE id  = %s"
+
+        args = (data, curre[1])
+
+        curs.execute(qry, args)
+        
         conn.commit()
         curs.close()
 
