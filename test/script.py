@@ -4,10 +4,7 @@ from script2 import Testg
 class Testgui:
     def passVar():
         # from script2 import x
-        print("New output: " + Testg.y)
+        y = Testg.passVars()
+        print("New output: " + y)
 
-        
-
-    print(Testg.y)
-    print(Testg.passVars().name)
     passVar()

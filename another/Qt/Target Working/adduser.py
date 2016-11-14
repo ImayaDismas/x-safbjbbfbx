@@ -1,3 +1,5 @@
+#!\usr\bin\python3
+# -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'adduser.ui'
@@ -10,6 +12,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import subprocess
 from PyQt5.QtCore import QCoreApplication
 import MySQLdb
+import sys
+from PIL import Image
+import PIL.Image
+import configparser
+
+config = configparser.RawConfigParser()
 
 class Ui_AddUser(object):
     def setupUi(self, AddUser):
@@ -104,7 +112,16 @@ class Ui_AddUser(object):
     def run(self, path):
         subprocess.call(['python3',path])
 
+    def read_file(filename):
+        with open(filename, 'rb') as f:
+            photo = f.read()
+        return photo
+
     def SaveButton(self):
+        config.read('imageurl.txt')
+        imageUrl = config.get('image_url', 'url')
+        data = read_file(imageUrl)
+
         target_name = self.lineEdit_2.text()
         # print(target_name)
         target_group = self.lineEdit.text()
@@ -121,11 +138,8 @@ class Ui_AddUser(object):
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
-        curs.execute("INSERT INTO  users(target_name, target_group, bio, network_id, notes, target_status) VALUES(%s, %s, %s, %s, %s, %s)", (target_name, target_group, bio, network_id, notes, target_status))
+        curs.execute("INSERT INTO  users(target_name, target_group, bio, network_id, notes, images, target_status) VALUES(%s, %s, %s, %s, %s, %s)", (target_name, target_group, bio, network_id, notes, data, target_status))
 
-        # args = (target_name, target_group, bio, network_id, notes, target_status)
-        #
-        # curs.execute(query, args)
         conn.commit()
         curs.close()
 

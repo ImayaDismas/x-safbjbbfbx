@@ -5,13 +5,12 @@
 # Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
-
+import configparser
 from PyQt5 import QtCore, QtGui, QtWidgets
 import subprocess
 from PyQt5.QtCore import QCoreApplication
 import MySQLdb
-from tgt import Ui_Target
-# from tgt import target
+config = configparser.RawConfigParser()
 
 class Ui_AddUser(object):
 
@@ -19,12 +18,6 @@ class Ui_AddUser(object):
         AddUser.setObjectName("AddUser")
         AddUser.resize(355, 497)
         AddUser.move(490, 100)
-
-        print(Ui_Target.tgt)
-
-        # x = Ui_Target.print_value(target_txt)
-        # print("Got this " + str(x))
-        # print(Ui_Target.target_txt)
 
         self.centralWidget = QtWidgets.QWidget(AddUser)
         self.centralWidget.setObjectName("centralWidget")
@@ -107,7 +100,8 @@ class Ui_AddUser(object):
 
     def fetch_info(self):
         # curr = self.listWidget.currentItem().text()
-        curr = 'Target 2'
+        config.read('target.txt')
+        curr = config.get('Target', 'id')
         # print (curr)
         curre = curr.split(' ')
 
@@ -129,11 +123,21 @@ class Ui_AddUser(object):
         curs.close()
         conn.close()
 
+    def read_file(filename):
+        with open(filename, 'rb') as f:
+            photo = f.read()
+        return photo
+
     def UpdateButton(self):
         # curr = self.listWidget.currentItem().text()
-        curr = 'Target 2'
+        config.read('target.txt')
+        curr = config.get('Target', 'id')
         # print (curr)
         curre = curr.split(' ')
+
+        config.read('imageurl.txt')
+        imageUrl = config.get('image_url', 'url')
+        data = read_file(imageUrl)
 
         target_name = self.lineEdit_2.text()
         # print(target_name)
@@ -151,9 +155,9 @@ class Ui_AddUser(object):
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
-        query = "UPDATE users SET target_name = %s, target_group = %s, bio = %s, network_id = %s, notes = %s, target_status = %s WHERE id = %s"
+        query = "UPDATE users SET target_name = %s, target_group = %s, bio = %s, network_id = %s, notes = %s, images = %s, target_status = %s WHERE id = %s"
 
-        args = (target_name, target_group, bio, network_id, notes, target_status,  curre[1])
+        args = (target_name, target_group, bio, network_id, notes, data, target_status,  curre[1])
 
         curs.execute(query, args)
         conn.commit()

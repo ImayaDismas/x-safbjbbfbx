@@ -25,7 +25,8 @@ class Ui_Image(object):
         #
         # w.resize(320, 240)
         filename = QFileDialog.getOpenFileName(Image, 'Select Image', '/home', "Images (*.png *.xpm *.jpg)")
-        print(filename)
+        print(filename[0])
+
 
         self.retranslateUi(Image)
         QtCore.QMetaObject.connectSlotsByName(Image)
