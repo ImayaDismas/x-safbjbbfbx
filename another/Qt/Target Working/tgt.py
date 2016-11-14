@@ -233,7 +233,7 @@ class Ui_Target(object):
         target_txt = str(curre[1])
 
         # print(target_txt)
-        config.set('Target', 'id', target_txt)
+        config.set('Target', 'id', curr)
 
         # Writing to file 'target.txt'
         with open('target.txt', 'w') as configfile:

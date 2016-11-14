@@ -5,13 +5,12 @@
 # Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
-
+import configparser
 from PyQt5 import QtCore, QtGui, QtWidgets
 import subprocess
 from PyQt5.QtCore import QCoreApplication
 import MySQLdb
-from tgt import Ui_Target
-# from tgt import target
+config = configparser.RawConfigParser()
 
 class Ui_AddUser(object):
 
@@ -20,7 +19,7 @@ class Ui_AddUser(object):
         AddUser.resize(355, 497)
         AddUser.move(490, 100)
 
-        print(Ui_Target.tgt)
+
 
         # x = Ui_Target.print_value(target_txt)
         # print("Got this " + str(x))
@@ -107,7 +106,8 @@ class Ui_AddUser(object):
 
     def fetch_info(self):
         # curr = self.listWidget.currentItem().text()
-        curr = 'Target 2'
+        config.read('target.txt')
+        curr = config.get('Target', 'id')
         # print (curr)
         curre = curr.split(' ')
 
@@ -131,7 +131,8 @@ class Ui_AddUser(object):
 
     def UpdateButton(self):
         # curr = self.listWidget.currentItem().text()
-        curr = 'Target 2'
+        config.read('target.txt')
+        curr = config.get('Target', 'id')
         # print (curr)
         curre = curr.split(' ')
 

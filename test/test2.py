@@ -15,7 +15,6 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
 
 config = configparser.RawConfigParser()
-config.add_section('Settings')
 
 class GateKeeper(QMainWindow, QWidget):
 
@@ -54,12 +53,18 @@ class GateKeeper(QMainWindow, QWidget):
     def sync_listWidget(self, txt):
         global text
         text = txt
-        print(txt)
-        return txt
+        config.read('target.txt')
+        curr = config.get('Target', 'id')
+        # print (curr)
+        curre = curr.split(' ')
+
+        print(curre[1])
+
+        # print(txt)
 
     # x = sync_listWidget(self, txt)
 
-    print(text)
+    #print(text)
 
     def center(self):
 
