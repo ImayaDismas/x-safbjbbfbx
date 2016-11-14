@@ -46,7 +46,7 @@ class GateKeeper(QMainWindow, QWidget):
         layout.addWidget(self.operator)
 
         self.label = QLabel(self)
-        self.label.setPixmap(QPixmap('web.png'))
+        self.label.setPixmap(QPixmap('images/web.png'))
         self.label.setGeometry(10, 70, 250, 250)
         layout.addWidget(self.label)
 
