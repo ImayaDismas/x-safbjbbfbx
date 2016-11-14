@@ -19,12 +19,6 @@ class Ui_AddUser(object):
         AddUser.resize(355, 497)
         AddUser.move(490, 100)
 
-
-
-        # x = Ui_Target.print_value(target_txt)
-        # print("Got this " + str(x))
-        # print(Ui_Target.target_txt)
-
         self.centralWidget = QtWidgets.QWidget(AddUser)
         self.centralWidget.setObjectName("centralWidget")
         self.textEdit_3 = QtWidgets.QTextEdit(self.centralWidget)
@@ -129,12 +123,21 @@ class Ui_AddUser(object):
         curs.close()
         conn.close()
 
+    def read_file(filename):
+        with open(filename, 'rb') as f:
+            photo = f.read()
+        return photo
+
     def UpdateButton(self):
         # curr = self.listWidget.currentItem().text()
         config.read('target.txt')
         curr = config.get('Target', 'id')
         # print (curr)
         curre = curr.split(' ')
+
+        config.read('imageurl.txt')
+        imageUrl = config.get('image_url', 'url')
+        data = read_file(imageUrl)
 
         target_name = self.lineEdit_2.text()
         # print(target_name)
@@ -152,9 +155,9 @@ class Ui_AddUser(object):
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
-        query = "UPDATE users SET target_name = %s, target_group = %s, bio = %s, network_id = %s, notes = %s, target_status = %s WHERE id = %s"
+        query = "UPDATE users SET target_name = %s, target_group = %s, bio = %s, network_id = %s, notes = %s, images = %s, target_status = %s WHERE id = %s"
 
-        args = (target_name, target_group, bio, network_id, notes, target_status,  curre[1])
+        args = (target_name, target_group, bio, network_id, notes, data, target_status,  curre[1])
 
         curs.execute(query, args)
         conn.commit()
