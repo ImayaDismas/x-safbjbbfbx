@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'Target.ui'
@@ -5,6 +6,7 @@
 # Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
+import configparser
 from time import gmtime, strftime
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QStringListModel
@@ -21,6 +23,8 @@ import io
 import os
 from io import StringIO
 
+config = configparser.RawConfigParser()
+config.add_section('Target')
 
 class Ui_Target(object):
     tgt = 10
@@ -29,7 +33,7 @@ class Ui_Target(object):
         Target.setWindowIcon(QIcon('web.png'))
 
         self.model = QStringListModel()
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        conn = MySQLdb.connect(user="root", passwd="nyagaka2013", db="data_target")
         cur = conn.cursor()
 
         cur.execute("SELECT * FROM users")
@@ -103,9 +107,9 @@ class Ui_Target(object):
 
         # x = self.print_info.target_txt
         # print(x)
-        self.line = QtWidgets.QLineEdit(self.centralWidget)
-        words = self.line.text()
-        print(words)
+        # self.line = QtWidgets.QLineEdit(self.centralWidget)
+        # words = self.line.text()
+        # print(words)
 
         self.gridLayout.addWidget(self.listWidget, 1, 0, 7, 2)
         self.graphicsView = QtWidgets.QGraphicsView(self.centralWidget)
@@ -229,13 +233,20 @@ class Ui_Target(object):
         target_txt = str(curre[1])
 
         # print(target_txt)
+        config.set('Target', 'id', target_txt)
+
+        # Writing to file 'target.txt'
+        with open('target.txt', 'w') as configfile:
+            config.write(configfile)
+
+
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
         curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
         row = curs.fetchone()
         while row is not None:
-            self.line.setText(target_txt)
+            # self.line.setText(target_txt)
             self.lineEdit_2.setText(row[1])
             self.lineEdit_3.setText(row[2])
             row = curs.fetchone()

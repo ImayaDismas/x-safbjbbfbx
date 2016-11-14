@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-x = ""
+x = "111111323254"
 name =""
 class Testg:
 
@@ -10,5 +10,4 @@ class Testg:
         # print(x)
         return j
 
-    name
-    y = passVars()
+    print(x)
