@@ -103,7 +103,7 @@ class Ui_Target(object):
         self.listWidget.currentItemChanged.connect(self.NetworkIdButton)
         self.listWidget.currentItemChanged.connect(self.NotesButton)
         self.listWidget.currentItemChanged.connect(self.BioButton)
-        # self.listWidget.currentItemChanged.connect(self.load_image)
+        self.listWidget.currentItemChanged.connect(self.load_image)
 
         # x = self.print_info.target_txt
         # print(x)
@@ -305,27 +305,54 @@ class Ui_Target(object):
         curs.close()
         conn.close()
 
+    def write_file(data, filename):
+        with open(filename, 'wb') as f:
+            f.write(data)
+
+    def read_blob(target_id, filename):
+        # select photo column of a specific author
+        query = "SELECT images FROM users where id = %i" %int(target_id)"
+
+        try:
+            # query blob data form the authors table
+            conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+            cursor = conn.cursor()
+            cursor.execute(query,)
+            photo = cursor.fetchone()[0]
+
+            # write blob data into a file
+            write_file(photo, filename)
+
+        except (MySQLdb.Error, MySQLdb.Warning) as e:
+            print(e)
+
+        finally:
+            cursor.close()
+            conn.close()
+
     def load_image(self):
 
         self.scene.clear()
         curr = self.listWidget.currentItem().text()
         curre = curr.split(' ')
-        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
-        curs = conn.cursor()
-
-        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
-        row = curs.fetchone()
-        while row is not None:
-            url = row[6]
-            response = requests.get(url)
-            # img = Image.open(io.BytesIO(response.content))
-            qimage = ImageQt(response.content)
-            # qimage = ImageQt(img)
-            pixmap = QtGui.QPixmap.fromImage(qimage)
-            self.scene.addPixmap(QPixmap(pixmap))
-            row = curs.fetchone()
-        curs.close()
-        conn.close()
+        read_blob(curre[1],"/home/imaya/Documents/Projects/x-safbjbbfbx/another/Qt/Target Working/images/target.png")
+        self.scene.addPixmap(QPixmap('images/target.png'))
+        # conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        # curs = conn.cursor()
+        #
+        # curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
+        # row = curs.fetchone()
+        # while row is not None:
+        #     url = row[6]
+        #     response = requests.get(url)
+        #     # img = Image.open(io.BytesIO(response.content))
+        #     qimage = ImageQt(response.content)
+        #     # qimage = ImageQt(img)
+        #     pixmap = QtGui.QPixmap.fromImage(qimage)
+        #     self.scene.addPixmap(QPixmap(pixmap))
+        #     row = curs.fetchone()
+        # curs.close()
+        # conn.close()
 
 
     def sync_listWidget(self, text):
