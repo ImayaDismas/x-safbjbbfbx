@@ -23,11 +23,13 @@ import io
 import os
 from io import StringIO
 
+configt = configparser.RawConfigParser()
 config = configparser.RawConfigParser()
-config.add_section('Target')
+configt.add_section('Target')
+config.add_section('List')
 
 class Ui_Target(object):
-    tgt = 10
+
     def TargetUi(self, Target):
         Target.setObjectName("Target")
         Target.setWindowIcon(QIcon('web.png'))
@@ -41,7 +43,8 @@ class Ui_Target(object):
         row = cur.fetchone()
         my_target = []
         while row is not None:
-            my_target.append("Target %i" % row[0] + " %s" %row[1])
+            # my_target.append("Target %i" % row[0] + " %s" %row[1])
+            my_target.append("%s" %row[1])
             row = cur.fetchone()
         cur.close()
         conn.close()
@@ -227,26 +230,53 @@ class Ui_Target(object):
         self.retranslateUi(Target)
         QtCore.QMetaObject.connectSlotsByName(Target)
 
-    target_txt = 0
     def print_info(self):
-        curr = self.listWidget.currentItem().text()
-        # print (curr)
-        curre = curr.split(' ')
-
-        target_txt = str(curre[1])
-
-        # print(target_txt)
-        config.set('Target', 'id', curr)
-
-        # Writing to file 'target.txt'
-        with open('target.txt', 'w') as configfile:
-            config.write(configfile)
-
-
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        cur = conn.cursor()
+
+        status = 1
+        cur.execute("SELECT * FROM users where target_status = %i" %status)
+        row = cur.fetchone()
+        my_target_name = []
+        my_target_id = []
+        while row is not None:
+            my_target_id.append("%i" %row[0])
+            my_target_name.append("%s" %row[1])
+            row = cur.fetchone()
+        cur.close()
+
+        curr = self.listWidget.currentItem().text()
+        for i in my_target_name:
+            if curr == i:
+                x = my_target_name.index(i)
+                config.set('List', 'index', x)
+
+                with open('index.txt', 'w') as configfile:
+                    config.write(configfile)
+
+        config.read('index.txt')
+        index = config.get('List', 'index')
+
+        for i in my_target_id:
+            j = my_target_id.index(i)
+            if index == str(j):
+
+                value = my_target_id[j]
+
+                configt.set('Target', 'id', value)
+
+                with open('target.txt', 'w') as configfile:
+                    configt.write(configfile)
+
+        configt.read('index.txt')
+        curre = configt.get('Target', 'id')
+
+
+
         curs = conn.cursor()
 
-        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
+        # curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
+        curs.execute("SELECT * FROM users where id = %i" %int(curre))
         row = curs.fetchone()
         while row is not None:
             # self.line.setText(target_txt)
@@ -255,21 +285,54 @@ class Ui_Target(object):
             row = curs.fetchone()
         curs.close()
         conn.close()
-    # print_info().global_work()
-    # print(target_txt)
 
 
 
 
     def BioButton(self):
-        curr = self.listWidget.currentItem().text()
-
-        curre = curr.split(' ')
-
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        cur = conn.cursor()
+
+        status = 1
+        cur.execute("SELECT * FROM users where target_status = %i" %status)
+        row = cur.fetchone()
+        my_target_name = []
+        my_target_id = []
+        while row is not None:
+            my_target_id.append("%i" %row[0])
+            my_target_name.append("%s" %row[1])
+            row = cur.fetchone()
+        cur.close()
+
+        curr = self.listWidget.currentItem().text()
+        for i in my_target_name:
+            if curr == i:
+                x = my_target_name.index(i)
+                config.set('List', 'index', x)
+
+                with open('index.txt', 'w') as configfile:
+                    config.write(configfile)
+
+        config.read('index.txt')
+        index = config.get('List', 'index')
+
+        for i in my_target_id:
+            j = my_target_id.index(i)
+            if index == str(j):
+
+                value = my_target_id[j]
+
+                configt.set('Target', 'id', value)
+
+                with open('target.txt', 'w') as configfile:
+                    configt.write(configfile)
+
+        configt.read('index.txt')
+        curre = configt.get('Target', 'id')
+
         curs = conn.cursor()
 
-        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
+        curs.execute("SELECT * FROM users where id = %i" %int(curre))
         row = curs.fetchone()
         while row is not None:
             self.textBrowser.setText(row[3])
@@ -278,14 +341,52 @@ class Ui_Target(object):
         conn.close()
 
     def NetworkIdButton(self):
-        curr = self.listWidget.currentItem().text()
-
-        curre = curr.split(' ')
-
+        # curr = self.listWidget.currentItem().text()
+        #
+        # curre = curr.split(' ')
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        cur = conn.cursor()
+
+        status = 1
+        cur.execute("SELECT * FROM users where target_status = %i" %status)
+        row = cur.fetchone()
+        my_target_name = []
+        my_target_id = []
+        while row is not None:
+            my_target_id.append("%i" %row[0])
+            my_target_name.append("%s" %row[1])
+            row = cur.fetchone()
+        cur.close()
+
+        curr = self.listWidget.currentItem().text()
+        for i in my_target_name:
+            if curr == i:
+                x = my_target_name.index(i)
+                config.set('List', 'index', x)
+
+                with open('index.txt', 'w') as configfile:
+                    config.write(configfile)
+
+        config.read('index.txt')
+        index = config.get('List', 'index')
+
+        for i in my_target_id:
+            j = my_target_id.index(i)
+            if index == str(j):
+
+                value = my_target_id[j]
+
+                configt.set('Target', 'id', value)
+
+                with open('target.txt', 'w') as configfile:
+                    configt.write(configfile)
+
+        configt.read('index.txt')
+        curre = configt.get('Target', 'id')
+
         curs = conn.cursor()
 
-        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
+        curs.execute("SELECT * FROM users where id = %i" %int(curre))
         row = curs.fetchone()
         while row is not None:
             self.textBrowser.setText(row[4])
@@ -295,12 +396,49 @@ class Ui_Target(object):
 
 
     def NotesButton(self):
-        curr = self.listWidget.currentItem().text()
-        curre = curr.split(' ')
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        cur = conn.cursor()
+
+        status = 1
+        cur.execute("SELECT * FROM users where target_status = %i" %status)
+        row = cur.fetchone()
+        my_target_name = []
+        my_target_id = []
+        while row is not None:
+            my_target_id.append("%i" %row[0])
+            my_target_name.append("%s" %row[1])
+            row = cur.fetchone()
+        cur.close()
+
+        curr = self.listWidget.currentItem().text()
+        for i in my_target_name:
+            if curr == i:
+                x = my_target_name.index(i)
+                config.set('List', 'index', x)
+
+                with open('index.txt', 'w') as configfile:
+                    config.write(configfile)
+
+        config.read('index.txt')
+        index = config.get('List', 'index')
+
+        for i in my_target_id:
+            j = my_target_id.index(i)
+            if index == str(j):
+
+                value = my_target_id[j]
+
+                configt.set('Target', 'id', value)
+
+                with open('target.txt', 'w') as configfile:
+                    configt.write(configfile)
+
+        configt.read('index.txt')
+        curre = configt.get('Target', 'id')
+
         curs = conn.cursor()
 
-        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
+        curs.execute("SELECT * FROM users where id = %i" %int(curre))
         row = curs.fetchone()
         while row is not None:
             self.textBrowser.setText(row[5])
@@ -313,16 +451,52 @@ class Ui_Target(object):
     def load_image(self):
 
         self.scene.clear()
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        cur = conn.cursor()
+
+        status = 1
+        cur.execute("SELECT * FROM users where target_status = %i" %status)
+        row = cur.fetchone()
+        my_target_name = []
+        my_target_id = []
+        while row is not None:
+            my_target_id.append("%i" %row[0])
+            my_target_name.append("%s" %row[1])
+            row = cur.fetchone()
+        cur.close()
+
         curr = self.listWidget.currentItem().text()
-        curre = curr.split(' ')
+        for i in my_target_name:
+            if curr == i:
+                x = my_target_name.index(i)
+                config.set('List', 'index', x)
+
+                with open('index.txt', 'w') as configfile:
+                    config.write(configfile)
+
+        config.read('index.txt')
+        index = config.get('List', 'index')
+
+        for i in my_target_id:
+            j = my_target_id.index(i)
+            if index == str(j):
+
+                value = my_target_id[j]
+
+                configt.set('Target', 'id', value)
+
+                with open('target.txt', 'w') as configfile:
+                    configt.write(configfile)
+
+        configt.read('index.txt')
+        curre = configt.get('Target', 'id')
 
         filename = "/home/imaya/Documents/Projects/x-safbjbbfbx/another/Qt/Target Working/images/*"
 
-        query = ("SELECT images FROM users where id = %i" %int(curre[1]))
+        query = ("SELECT images FROM users where id = %i" %int(curre))
 
         try:
             # query blob data form the users table
-            conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
             cursor = conn.cursor()
             cursor.execute(query,)
             photo = cursor.fetchone()[0]
@@ -362,15 +536,55 @@ class Ui_Target(object):
     def load_image_search(self, text):
 
         self.scene.clear()
-        curre = text.split(' ')
+        # curre = text.split(' ')
+
+        conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        cur = conn.cursor()
+
+        status = 1
+        cur.execute("SELECT * FROM users where target_status = %i" %status)
+        row = cur.fetchone()
+        my_target_name = []
+        my_target_id = []
+        while row is not None:
+            # my_target.append("Target %i" % row[0] + " %s" %row[1])
+            my_target_id.append("%i" %row[0])
+            my_target_name.append("%s" %row[1])
+            row = cur.fetchone()
+        cur.close()
+
+        curr = text
+        for i in my_target_name:
+            if curr == i:
+                x = my_target_name.index(i)
+                config.set('List', 'index', x)
+
+                with open('index.txt', 'w') as configfile:
+                    config.write(configfile)
+
+        config.read('index.txt')
+        index = config.get('List', 'index')
+
+        for i in my_target_id:
+            j = my_target_id.index(i)
+            if index == str(j):
+
+                value = my_target_id[j]
+
+                configt.set('Target', 'id', value)
+
+                with open('target.txt', 'w') as configfile:
+                    configt.write(configfile)
+
+        configt.read('index.txt')
+        curre = configt.get('Target', 'id')
 
         filename = "/home/imaya/Documents/Projects/x-safbjbbfbx/another/Qt/Target Working/images/*"
 
-        query = ("SELECT images FROM users where id = %i" %int(curre[1]))
+        query = ("SELECT images FROM users where id = %i" %int(curre))
 
         try:
             # query blob data form the users table
-            conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
             cursor = conn.cursor()
             cursor.execute(query,)
             photo = cursor.fetchone()[0]
@@ -393,15 +607,62 @@ class Ui_Target(object):
 
 
     def sync_listWidget(self, text):
-        # txt = self.lineEdit.Text()
-        # print(txt)
 
-        target_id = text.split(' ')
-        # print(target_id[1])
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        cur = conn.cursor()
+
+        status = 1
+        cur.execute("SELECT * FROM users where target_status = %i" %status)
+        row = cur.fetchone()
+        my_target_name = []
+        my_target_id = []
+        while row is not None:
+            # my_target.append("Target %i" % row[0] + " %s" %row[1])
+            my_target_id.append("%i" %row[0])
+            my_target_name.append("%s" %row[1])
+            row = cur.fetchone()
+        cur.close()
+
+        curr = text
+        for i in my_target_name:
+            if curr == i:
+                x = my_target_name.index(i)
+                config.set('List', 'index', x)
+
+                with open('index.txt', 'w') as configfile:
+                    config.write(configfile)
+
+        config.read('index.txt')
+        index = config.get('List', 'index')
+
+        for i in my_target_id:
+            j = my_target_id.index(i)
+            if index == str(j):
+
+                value = my_target_id[j]
+
+                configt.set('Target', 'id', value)
+
+                with open('target.txt', 'w') as configfile:
+                    configt.write(configfile)
+
+        configt.read('index.txt')
+        curre = configt.get('Target', 'id')
+
+        # target_id = text.split(' ')
+        # target_txt = str(target_id[1])
+        #
+        # # print(target_txt)
+        # config.set('Target', 'id', text)
+        #
+        # # Writing to file 'target.txt'
+        # with open('target.txt', 'w') as configfile:
+        #     config.write(configfile)
+        # # print(target_id[1])
+
         cur1 = conn.cursor()
 
-        cur1.execute("SELECT * FROM users where id = %i" %int(target_id[1]))
+        cur1.execute("SELECT * FROM users where id = %i" %int(curre))
         row = cur1.fetchone()
         while row is not None:
             # print (row[0],row[1],row[2],row[3],row[4])
@@ -411,7 +672,7 @@ class Ui_Target(object):
         cur1.close()
 
         cur2 = conn.cursor()
-        cur2.execute("SELECT * FROM users where id = %i" %int(target_id[1]))
+        cur2.execute("SELECT * FROM users where id = %i" %int(curre))
         row = cur2.fetchone()
         while row is not None:
             self.textBrowser.setText(row[3])
@@ -424,15 +685,49 @@ class Ui_Target(object):
 
     def BioButtonSearch(self):
 
-        text = self.lineEdit.text()
-        print(text)
-
-        target_id = text.split(' ')
-        # print(target_id[1])
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        cur = conn.cursor()
+
+        status = 1
+        cur.execute("SELECT * FROM users where target_status = %i" %status)
+        row = cur.fetchone()
+        my_target_name = []
+        my_target_id = []
+        while row is not None:
+            # my_target.append("Target %i" % row[0] + " %s" %row[1])
+            my_target_id.append("%i" %row[0])
+            my_target_name.append("%s" %row[1])
+            row = cur.fetchone()
+        cur.close()
+
+        curr = self.lineEdit.text()
+        for i in my_target_name:
+            if curr == i:
+                x = my_target_name.index(i)
+                config.set('List', 'index', x)
+
+                with open('index.txt', 'w') as configfile:
+                    config.write(configfile)
+
+        config.read('index.txt')
+        index = config.get('List', 'index')
+
+        for i in my_target_id:
+            j = my_target_id.index(i)
+            if index == str(j):
+
+                value = my_target_id[j]
+
+                configt.set('Target', 'id', value)
+
+                with open('target.txt', 'w') as configfile:
+                    configt.write(configfile)
+
+        configt.read('index.txt')
+        curre = configt.get('Target', 'id')
 
         cur2 = conn.cursor()
-        cur2.execute("SELECT * FROM users where id = %i" %int(target_id[1]))
+        cur2.execute("SELECT * FROM users where id = %i" %int(curre))
         row = cur2.fetchone()
         while row is not None:
             self.textBrowser.setText(row[3])
@@ -441,16 +736,49 @@ class Ui_Target(object):
         conn.close()
 
     def NetworkIdButtonSearch(self):
-        # print(text)
-        text = self.lineEdit.text()
-        print(text)
-
-        target_id = text.split(' ')
-        # print(target_id[1])
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        cur = conn.cursor()
+
+        status = 1
+        cur.execute("SELECT * FROM users where target_status = %i" %status)
+        row = cur.fetchone()
+        my_target_name = []
+        my_target_id = []
+        while row is not None:
+            # my_target.append("Target %i" % row[0] + " %s" %row[1])
+            my_target_id.append("%i" %row[0])
+            my_target_name.append("%s" %row[1])
+            row = cur.fetchone()
+        cur.close()
+
+        curr = self.lineEdit.text()
+        for i in my_target_name:
+            if curr == i:
+                x = my_target_name.index(i)
+                config.set('List', 'index', x)
+
+                with open('index.txt', 'w') as configfile:
+                    config.write(configfile)
+
+        config.read('index.txt')
+        index = config.get('List', 'index')
+
+        for i in my_target_id:
+            j = my_target_id.index(i)
+            if index == str(j):
+
+                value = my_target_id[j]
+
+                configt.set('Target', 'id', value)
+
+                with open('target.txt', 'w') as configfile:
+                    configt.write(configfile)
+
+        configt.read('index.txt')
+        curre = configt.get('Target', 'id')
 
         cur3 = conn.cursor()
-        cur3.execute("SELECT * FROM users where id = %i" %int(target_id[1]))
+        cur3.execute("SELECT * FROM users where id = %i" %int(curre))
         row = cur3.fetchone()
         while row is not None:
             self.textBrowser.setText(row[4])
@@ -459,16 +787,49 @@ class Ui_Target(object):
         conn.close()
 
     def NotesButtonSearch(self):
-        # print(text)
-        text = self.lineEdit.text()
-        print(text)
-
-        target_id = text.split(' ')
-        # print(target_id[1])
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
+        cur = conn.cursor()
+
+        status = 1
+        cur.execute("SELECT * FROM users where target_status = %i" %status)
+        row = cur.fetchone()
+        my_target_name = []
+        my_target_id = []
+        while row is not None:
+            # my_target.append("Target %i" % row[0] + " %s" %row[1])
+            my_target_id.append("%i" %row[0])
+            my_target_name.append("%s" %row[1])
+            row = cur.fetchone()
+        cur.close()
+
+        curr = self.lineEdit.text()
+        for i in my_target_name:
+            if curr == i:
+                x = my_target_name.index(i)
+                config.set('List', 'index', x)
+
+                with open('index.txt', 'w') as configfile:
+                    config.write(configfile)
+
+        config.read('index.txt')
+        index = config.get('List', 'index')
+
+        for i in my_target_id:
+            j = my_target_id.index(i)
+            if index == str(j):
+
+                value = my_target_id[j]
+
+                configt.set('Target', 'id', value)
+
+                with open('target.txt', 'w') as configfile:
+                    configt.write(configfile)
+
+        configt.read('index.txt')
+        curre = configt.get('Target', 'id')
 
         cur4 = conn.cursor()
-        cur4.execute("SELECT * FROM users where id = %i" %int(target_id[1]))
+        cur4.execute("SELECT * FROM users where id = %i" %int(curre))
         row = cur4.fetchone()
         while row is not None:
             self.textBrowser.setText(row[5])

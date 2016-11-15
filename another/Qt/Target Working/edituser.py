@@ -99,17 +99,14 @@ class Ui_AddUser(object):
 
 
     def fetch_info(self):
-        # curr = self.listWidget.currentItem().text()
-        config.read('target.txt')
-        curr = config.get('Target', 'id')
-        # print (curr)
-        curre = curr.split(' ')
 
-        # print(curre[1])
+        config.read('target.txt')
+        curre = config.get('Target', 'id')
+
         conn = MySQLdb.connect(user="root", passwd="nairobi2013", db="data_target")
         curs = conn.cursor()
 
-        curs.execute("SELECT * FROM users where id = %i" %int(curre[1]))
+        curs.execute("SELECT * FROM users where id = %i" %int(curre))
         # curs.execute("SELECT * FROM users")
         row = curs.fetchone()
         while row is not None:
@@ -126,19 +123,10 @@ class Ui_AddUser(object):
     def UpdateButton(self):
 
         config.read('target.txt')
-        curr = config.get('Target', 'id')
-
-        curre = curr.split(' ')
+        curre = config.get('Target', 'id')
 
         config.read('imageurl.txt')
         imageUrl = config.get('image_url', 'url')
-
-        def read_file(filename):
-            with open(filename, 'rb') as f:
-                photo = f.read()
-            return photo
-
-        data = read_file(imageUrl)
 
         target_name = self.lineEdit_2.text()
         # print(target_name)
@@ -158,19 +146,28 @@ class Ui_AddUser(object):
 
         query = "UPDATE users SET target_name = %s, target_group = %s, bio = %s, network_id = %s, notes = %s, target_status = %s WHERE id = %s"
 
-        args = (target_name, target_group, bio, network_id, notes, target_status,  curre[1])
+        args = (target_name, target_group, bio, network_id, notes, target_status,  curre)
 
         curs.execute(query, args)
 
         # prepare update query and data
-        qry = "UPDATE users " \
-                "SET images = %s " \
-                "WHERE id  = %s"
+        if not imageUrl:
 
-        args = (data, curre[1])
+            def read_file(filename):
+                with open(filename, 'rb') as f:
+                    photo = f.read()
+                return photo
 
-        curs.execute(qry, args)
-        
+            data = read_file(imageUrl)
+
+            qry = "UPDATE users " \
+                    "SET images = %s " \
+                    "WHERE id  = %s"
+
+            args = (data, curre)
+
+            curs.execute(qry, args)
+
         conn.commit()
         curs.close()
 

@@ -41,9 +41,7 @@ class Example(QWidget):
 
     def DeleteButton(self):
         config.read('target.txt')
-        curr = config.get('Target', 'id')
-
-        curre = curr.split(' ')
+        curre = config.get('Target', 'id')
 
         target_status = 0
 
@@ -52,7 +50,7 @@ class Example(QWidget):
 
         query = "UPDATE users SET target_status = %s WHERE id = %s"
 
-        args = (target_status,  curre[1])
+        args = (target_status,  curre)
 
         curs.execute(query, args)
         conn.commit()
