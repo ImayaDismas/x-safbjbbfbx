@@ -335,6 +335,7 @@ class Ui_Target(object):
         curs.execute("SELECT * FROM users where id = %i" %int(curre))
         row = curs.fetchone()
         while row is not None:
+            self.textBrowser.clear()
             self.textBrowser.setText(row[3])
             row = curs.fetchone()
         curs.close()
@@ -389,6 +390,7 @@ class Ui_Target(object):
         curs.execute("SELECT * FROM users where id = %i" %int(curre))
         row = curs.fetchone()
         while row is not None:
+            self.textBrowser.clear()
             self.textBrowser.setText(row[4])
             row = curs.fetchone()
         curs.close()
@@ -441,6 +443,7 @@ class Ui_Target(object):
         curs.execute("SELECT * FROM users where id = %i" %int(curre))
         row = curs.fetchone()
         while row is not None:
+            self.textBrowser.clear()
             self.textBrowser.setText(row[5])
             row = curs.fetchone()
         curs.close()
@@ -730,6 +733,7 @@ class Ui_Target(object):
         cur2.execute("SELECT * FROM users where id = %i" %int(curre))
         row = cur2.fetchone()
         while row is not None:
+            self.textBrowser.clear()
             self.textBrowser.setText(row[3])
             row = cur2.fetchone()
         cur2.close()
@@ -781,6 +785,7 @@ class Ui_Target(object):
         cur3.execute("SELECT * FROM users where id = %i" %int(curre))
         row = cur3.fetchone()
         while row is not None:
+            self.textBrowser.clear()
             self.textBrowser.setText(row[4])
             row = cur3.fetchone()
         cur3.close()
@@ -832,6 +837,7 @@ class Ui_Target(object):
         cur4.execute("SELECT * FROM users where id = %i" %int(curre))
         row = cur4.fetchone()
         while row is not None:
+            self.textBrowser.clear()
             self.textBrowser.setText(row[5])
             row = cur4.fetchone()
         cur4.close()
