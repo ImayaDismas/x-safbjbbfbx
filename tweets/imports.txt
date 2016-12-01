@@ -11,3 +11,6 @@ $ python setup.py install
 
 
 pip install seaborn
+
+http://blog.coderscrowd.com/twitter-hashtag-data-analysis-with-python/
+https://geduldig.github.io/tutorials/twitter-counter/
