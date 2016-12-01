@@ -1,0 +1,13 @@
+pip install matplotlib
+sudo apt-get install python3-tk
+sudo apt-get install python3-pandas
+sudo apt-get install python3-mpltoolkits.basemap
+sudo apt-get install python-mpltoolkits.basemap-data
+
+git clone https://github.com/tonysyu/mpltools.git
+$ cd mpltools
+sudo su
+$ python setup.py install
+
+
+pip install seaborn
