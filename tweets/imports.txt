@@ -11,6 +11,14 @@ $ python setup.py install
 
 
 pip install seaborn
+pip install wordcloud
+sudo apt install ipython3
+sudo -H pip install jupyter
+https://www.digitalocean.com/community/tutorials/how-to-set-up-a-jupyter-notebook-to-run-ipython-on-ubuntu-16-04
+
+sudo add-apt-repository ppa:pythonxy/pythonxy-devel
+sudo apt-get update
+sudo apt-get install python-seaborn python-pandas
 
 http://blog.coderscrowd.com/twitter-hashtag-data-analysis-with-python/
 https://geduldig.github.io/tutorials/twitter-counter/
