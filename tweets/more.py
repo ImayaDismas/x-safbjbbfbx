@@ -19,9 +19,11 @@ import os
 from scipy.misc import imread
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import random
+import matplotlib.pyplot as plt
+%matplotlib inline
 
 # from IPython import get_ipython
-# get_ipython().run_line_magic(u'matplotlib inline')
+# get_ipython().run(u'matplotlib inline')
 
 # Seaborn plots
 sns.set_palette("deep", desat=.6)

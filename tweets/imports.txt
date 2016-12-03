@@ -22,3 +22,5 @@ sudo apt-get install python-seaborn python-pandas
 
 http://blog.coderscrowd.com/twitter-hashtag-data-analysis-with-python/
 https://geduldig.github.io/tutorials/twitter-counter/
+
+https://plot.ly/python/ipython-notebook-tutorial/
