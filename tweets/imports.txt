@@ -24,3 +24,5 @@ http://blog.coderscrowd.com/twitter-hashtag-data-analysis-with-python/
 https://geduldig.github.io/tutorials/twitter-counter/
 
 https://plot.ly/python/ipython-notebook-tutorial/
+
+https://github.com/mcs07/CIRpy/issues/3
