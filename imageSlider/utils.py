@@ -4,7 +4,7 @@ def isExtensionSupported(filename):
     """ Supported extensions viewable in SlideShow
     """
     if filename.endswith('PNG') or filename.endswith('png') or\
-     filename.endswith('JPG') or filename.endswith('jpg') or filename.endswith('JPEG') or filename.endswith('jpeg'):
+     filename.endswith('JPG') or filename.endswith('jpg') or filename.endswith('JPEG') or filename.endswith('jpeg') or filename.endswith('GIF') or filename.endswith('gif'):
         return True
 
 def imageFilePaths(paths):

@@ -42,9 +42,9 @@ class SlideShowPics(QMainWindow):
         size = self.geometry()
         self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
         self.setStyleSheet("QWidget{background-color: #000000;}")
-        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+        # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.buildUi()
-
+        # self.showFullScreen()
         self.playPause()
 
     def buildUi(self):
@@ -125,7 +125,7 @@ def main(paths):
                 os.getcwd())))
 
 if __name__ == '__main__':
-    curntPaths = os.getcwd()
+    curntPaths = os.getcwd()+ "/images"
     if len(sys.argv) > 1:
         curntPaths = sys.argv[1:]
     main(curntPaths)
