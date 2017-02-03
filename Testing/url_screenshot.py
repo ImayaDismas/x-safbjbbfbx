@@ -7,8 +7,8 @@ from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWidgets import QApplication
 
 app = QApplication(sys.argv)
-
-web_url = "https://pythonspot.com"
+page = QWebPage()
+web_url = "https://www.google.com/"
 web = QWebView()
 web.load(QUrl(web_url))
 web.show()
